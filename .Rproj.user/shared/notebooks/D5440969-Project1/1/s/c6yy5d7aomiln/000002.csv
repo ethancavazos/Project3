@@ -1,0 +1,10 @@
+"0","#intro! :D"
+"0","#terrorist group data "
+"0","terrorG <- read.csv(""TerroristGroups.csv"", header=TRUE, sep="","")"
+"0",""
+"0",""
+"0","#Global Terrorism Database information"
+"0","trrGTD1 <- read.csv(""GlobalTerrorismDatabase.csv"", header=TRUE, sep="","")"
+"2","no fue posible abrir el archivo 'GlobalTerrorismDatabase.csv': No such file or directory"
+"2","Error in file(file, ""rt"") : no se puede abrir la conexión
+"

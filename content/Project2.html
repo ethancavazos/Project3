@@ -1,0 +1,372 @@
+---
+title: "Project 2"
+author: "Ethan Cavazos"
+date: "11/18/2019"
+output: html_document
+---
+
+
+
+<pre><code>## Df Pillai approx F num Df den Df Pr(&gt;F)
+## colour 1 0.031571 85.136 2 5223 &lt; 2.2e-16 ***
+## Residuals 5224
+## ---
+## Signif. codes: 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1
+&#39; &#39; 1</code></pre>
+<pre><code>## Response age :
+## Df Sum Sq Mean Sq F value Pr(&gt;F)
+## colour 1 1637 1637.47 23.78 1.112e-06 ***
+## Residuals 5224 359713 68.86
+## ---
+## Signif. codes: 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1
+&#39; &#39; 1
+##
+## Response checks :
+## Df Sum Sq Mean Sq F value Pr(&gt;F)
+## colour 1 366.3 366.33 159.3 &lt; 2.2e-16 ***
+## Residuals 5224 12012.9 2.30
+## ---
+## Signif. codes: 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1
+&#39; &#39; 1</code></pre>
+<pre><code>## # A tibble: 2 x 3
+##   colour `mean(age)` `mean(checks)`
+##    &lt;dbl&gt;       &lt;dbl&gt;          &lt;dbl&gt;
+## 1      0        23.5           1.49
+## 2      1        24.8           2.10</code></pre>
+<pre><code>## 
+##  Pairwise comparisons using t tests with pooled SD 
+## 
+## data:  data$age and data$colour 
+## 
+##   0      
+## 1 1.1e-06
+## 
+## P value adjustment method: none</code></pre>
+<pre><code>## 
+##  Pairwise comparisons using t tests with pooled SD 
+## 
+## data:  data$checks and data$colour 
+## 
+##   0     
+## 1 &lt;2e-16
+## 
+## P value adjustment method: none</code></pre>
+<pre><code>## [1] 0.01</code></pre>
+<p>##0.</p>
+<p><em>Courtesy of <a href="https://vincentarelbundock.github.io/Rdatasets/datasets.html" class="uri">https://vincentarelbundock.github.io/Rdatasets/datasets.html</a>, I used the “Arrests” dataset. This dataset chronicles the arrests of more tha 5,000 individuals in Toronto for possession of marijuana. Each observation holds information on the year of the arrest, the ‘colour’ of the individual (noting them as black or white), the arrestees age, sex, employment status, citizen status, as well as the number of times that individual showed up in the police department’s database (‘checks’). </em></p>
+<p>##1.</p>
+<p><em>A one-way multivariate analysis of variance (MANOVA) was conducted to determine if ‘colour’ - herein refered to as ‘race’ - has an effect on the age of the arrested individual as well as the number of checks that individual is likely to have. Bivariate density plots were constructed to assess normality and revealed the data to be likley non-normal. Covariance matrices were examined and revealed relative homogeneity between each group. No univariate and multivariate outliers were detected leading us to believe MANOVA to be an appropriate method of analysis.</em></p>
+<p><em>Significant differences were found among the two racial groups on measure of ‘age’ and ‘checks’, Pillai trace = .032, pseudo F(2, 5223) = 85.1136, p &lt; 0.0001.</em></p>
+<p><em>Post-hoc analysis was performed by conducting pairwise comparisons to further evaluate differences between ‘age’ and ‘checks’. Significant differences were found between each racial class and their recorded age and checks after adjusting for multiple comparisons (bonferroni).</em></p>
+<p><em>Assumptions of the MANOVA are plentiful and often hard to test or meet. It is likely that not all assumptions were met here. For example, a plot to evaluate normality was generated but it was unclear if whether or not normality could be confirmed. </em></p>
+<pre class="r"><code>#Linear Regression Model 
+#centered variables and interaction
+centeredcolour&lt;- data$colour - mean(data$colour)
+centeredage&lt;- data$age- mean(data$age)
+my_glm &lt;- lm(checks ~ age + colour + centeredage * centeredcolour, data = data)
+  resids&lt;-my_glm$residuals #save residuals
+  fitted&lt;-my_glm$fitted.values
+summary(my_glm)</code></pre>
+<pre><code>##
+## Call:
+## lm(formula = checks ~ age + colour + centeredage *
+centeredcolour,
+## data = data)
+##
+## Residuals:
+## Min 1Q Median 3Q Max
+## -2.5071 -1.3302 -0.3021 1.1654 4.1374
+##
+## Coefficients: (2 not defined because of singularities)
+## Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept) 0.938207 0.063669 14.736 &lt; 2e-16 ***
+## age 0.023307 0.002508 9.292 &lt; 2e-16 ***
+## colour 0.596692 0.048491 12.305 &lt; 2e-16 ***
+## centeredage NA NA NA NA
+## centeredcolour NA NA NA NA
+## centeredage:centeredcolour -0.019136 0.005682 -3.368
+0.000764 ***
+## ---
+## Signif. codes: 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1
+&#39; &#39; 1
+##
+## Residual standard error: 1.503 on 5222 degrees of
+freedom
+## Multiple R-squared: 0.04698, Adjusted R-squared: 0.04644
+## F-statistic: 85.81 on 3 and 5222 DF, p-value: &lt; 2.2e-16</code></pre>
+<pre class="r"><code>ggplot(data, aes(x=as.numeric(as.character(age)), y=checks,group=colour))+geom_point(aes(color=colour)) +  stat_sum(aes(size = factor(..n..), color = colour), geom = &quot;point&quot;) +
+  scale_size_discrete(range = c(1, 10))+
+ geom_smooth(method=&quot;lm&quot;,formula=y~1,se=F,fullrange=T,aes(color=colour))+
+theme(legend.position=c(.9,.19)) + xlab(&quot;Age in years&quot;)</code></pre>
+<p><img src="/Project2_files/figure-html/linear%20regression-1.png" width="768" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>bptest(my_glm)</code></pre>
+<pre><code>## 
+##  studentized Breusch-Pagan test
+## 
+## data:  my_glm
+## BP = 8.2294, df = 3, p-value = 0.0415</code></pre>
+<pre class="r"><code>#ks.test(resids, &quot;pnorm&quot;, mean=0, sd(resids)) 
+
+#coeftest(my_glm, vcov=vcovHC(my_glm))
+
+#summary(my_glm)$adj.r.squared</code></pre>
+<p>##3.</p>
+<p><em>I chose to predict ‘checks’ from a person’s age and racial status.</em>
+<em>Best-fitting line: Number of ‘Checks’ = 0.94 + 0.023(age) + 0.5(race)</em>
+<em>The data was found to be homoskedastic by way of bptest(). Additionally, the data is non-normal and non-linear.</em>
+<em>Using robust SEs, all results remained significant.</em>
+<em>The proportion of variation explained by this model is 0.046.</em>
+<em>In all, this model was an extremeley poor one to use to predict the number of checks of an individual.</em></p>
+<pre class="r"><code>boot_dat&lt;-data[sample(nrow(data),replace=TRUE),]
+samp_distn&lt;-replicate(5000, {
+ boot_dat&lt;-data[sample(nrow(data),replace=TRUE),]
+ fit&lt;-lm(checks~age+colour+centeredage*centeredcolour,data=boot_dat)
+ coef(fit)
+})
+
+samp_distn%&gt;%t%&gt;%as.data.frame%&gt;%summarize_all(sd)</code></pre>
+<pre><code>## (Intercept) age colour centeredage centeredcolour
+centeredage:centeredcolour
+## 1 0.06238278 0.002438328 0.04896764 0.002531638
+0.04843307 0.005651108</code></pre>
+<pre class="r"><code>#compare to Robust SEs
+coeftest(my_glm, vcov=vcovHC(my_glm))</code></pre>
+<pre><code>##
+## t test of coefficients:
+##
+## Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept) 0.9382066 0.0629475 14.9046 &lt; 2.2e-16 ***
+## age 0.0233066 0.0024923 9.3513 &lt; 2.2e-16 ***
+## colour 0.5966919 0.0492585 12.1135 &lt; 2.2e-16 ***
+## centeredage:centeredcolour -0.0191359 0.0055841 -3.4268
+0.0006154 ***
+## ---
+## Signif. codes: 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1
+&#39; &#39; 1</code></pre>
+<pre class="r"><code>#compare to reg SEs
+summary(my_glm)</code></pre>
+<pre><code>##
+## Call:
+## lm(formula = checks ~ age + colour + centeredage *
+centeredcolour,
+## data = data)
+##
+## Residuals:
+## Min 1Q Median 3Q Max
+## -2.5071 -1.3302 -0.3021 1.1654 4.1374
+##
+## Coefficients: (2 not defined because of singularities)
+## Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept) 0.938207 0.063669 14.736 &lt; 2e-16 ***
+## age 0.023307 0.002508 9.292 &lt; 2e-16 ***
+## colour 0.596692 0.048491 12.305 &lt; 2e-16 ***
+## centeredage NA NA NA NA
+## centeredcolour NA NA NA NA
+## centeredage:centeredcolour -0.019136 0.005682 -3.368
+0.000764 ***
+## ---
+## Signif. codes: 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1
+&#39; &#39; 1
+##
+## Residual standard error: 1.503 on 5222 degrees of
+freedom
+## Multiple R-squared: 0.04698, Adjusted R-squared: 0.04644
+## F-statistic: 85.81 on 3 and 5222 DF, p-value: &lt; 2.2e-16</code></pre>
+<p>##4.</p>
+<p><em>Between ‘age’ and ‘colour’, there were no significant differences between age SEs across all boards. However, robust SEs yielded a 10x increase for ‘colour’.</em></p>
+<pre class="r"><code>#install.packages(&quot;MASS&quot;)
+library(MASS)
+#install.packages(&quot;pROC&quot;)
+library(pROC)
+dataOriginal &lt;- read.csv(&quot;Arrests.csv&quot;)
+
+#predicting employment status 
+logRegFit &lt;- glm(employed ~ age + checks, data = dataOriginal, family = binomial(&quot;logit&quot;))
+coeftest(logRegFit)</code></pre>
+<pre><code>##
+## z test of coefficients:
+##
+## Estimate Std. Error z value Pr(&gt;|z|)
+## (Intercept) 2.6123712 0.1121029 23.3033 &lt; 2e-16 ***
+## age -0.0249260 0.0039274 -6.3467 2.2e-10 ***
+## checks -0.3685933 0.0226537 -16.2708 &lt; 2e-16 ***
+## ---
+## Signif. codes: 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1
+&#39; &#39; 1</code></pre>
+<pre class="r"><code>#age:
+exp(-0.0249260)</code></pre>
+<pre><code>## [1] 0.9753821</code></pre>
+<pre class="r"><code>#checks
+exp(-0.3685933)</code></pre>
+<pre><code>## [1] 0.6917067</code></pre>
+<pre class="r"><code>class_diag&lt;-function(probs,truth){
+ tab&lt;-table(factor(probs&gt;.5,levels=c(&quot;FALSE&quot;,&quot;TRUE&quot;)),truth)
+ acc=sum(diag(tab))/sum(tab)
+ sens=tab[2,2]/colSums(tab)[2]
+ spec=tab[1,1]/colSums(tab)[1]
+ ppv=tab[2,2]/rowSums(tab)[2]
+ if(is.numeric(truth)==FALSE &amp; is.logical(truth)==FALSE) truth&lt;-as.numeric(truth)-1
+ #CALCULATE EXACT AUC
+ ord&lt;-order(probs, decreasing=TRUE)
+ probs &lt;- probs[ord]; truth &lt;- truth[ord]
+ TPR=cumsum(truth)/max(1,sum(truth))
+ FPR=cumsum(!truth)/max(1,sum(!truth))
+ dup&lt;-c(probs[-1]&gt;=probs[-length(probs)], FALSE)
+ TPR&lt;-c(0,TPR[!dup],1); FPR&lt;-c(0,FPR[!dup],1)
+ n &lt;- length(TPR)
+ auc&lt;- sum( ((TPR[-1]+TPR[-n])/2) * (FPR[-1]-FPR[-n]) )
+ data.frame(acc,sens,spec,ppv,auc)
+} 
+
+
+prob &lt;- predict(logRegFit, type = &quot;response&quot;)
+class_diag(prob, dataOriginal$employed)</code></pre>
+<pre><code>##           acc      sens       spec       ppv       auc
+## Yes 0.7845388 0.9934323 0.01434978 0.7879606 0.6800676</code></pre>
+<pre class="r"><code>confTable &lt;- table(predict = as.numeric(prob &gt; 0.5), truth = dataOriginal$employed) %&gt;%
+ addmargins
+confTable</code></pre>
+<pre><code>##        truth
+## predict   No  Yes  Sum
+##     0     16   27   43
+##     1   1099 4084 5183
+##     Sum 1115 4111 5226</code></pre>
+<pre class="r"><code>#Sensitivity (TPR) = 4084/4111
+#Specificty (TNR) = 16/1115
+#Precision = 4084/5184
+#acuracy (16+4084)/4111
+
+ggplot(data, aes(age,prob))+geom_point(aes(color=colour),alpha=.5,size=3)+
+ geom_rug(aes(color=colour),alpha=.5,sides=&quot;right&quot;)+geom_hline(yintercept=.1)</code></pre>
+<p><img src="/Project2_files/figure-html/log%20reg-1.png" width="768" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>library(plotROC) 
+#install.packages(&quot;plotROC&quot;)
+
+#ROC
+ROCplot&lt;-ggplot(data)+geom_roc(aes(d=colour,m=checks), n.cuts=0)
+ROCplot</code></pre>
+<p><img src="/Project2_files/figure-html/log%20reg-2.png" width="768" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>calc_auc(ROCplot)</code></pre>
+<pre><code>##   PANEL group       AUC
+## 1     1    -1 0.6140203</code></pre>
+<pre class="r"><code>#10-fold CV
+set.seed(1234)
+k = 10
+data1 &lt;- data[sample(nrow(data)), ] #this randomly orders rows
+folds &lt;- cut(seq(1:nrow(data)), breaks = k, labels = F) #this creates folds
+diags &lt;- NULL
+for (i in 1:k) {
+
+ ## Creating the training and testing sets
+
+ train &lt;- data1[folds != i, ]
+ test &lt;- data1[folds == i, ]
+ truth &lt;- test$colour
+
+ ## Train model on training set
+
+ fit &lt;- glm(colour ~ ., data = train, family = &quot;binomial&quot;)
+ probs &lt;- predict(fit, newdata = test, type = &quot;response&quot;)
+
+ ## Test model on test set (save all k results)
+ diags &lt;- rbind(diags, class_diag(probs, truth))
+}
+apply(diags, 2, mean)</code></pre>
+<pre><code>##       acc      sens      spec       ppv       auc 
+## 0.7644506 0.1508459 0.9652862 0.5847371 0.6794186</code></pre>
+<p>##5</p>
+<p><em>Predicting employment status from ‘age’ and ‘checks’:</em>
+<em>For every one-unit increase in age, the odds of being employed decrease by a factor of 0.9754. And for every one-unit increase in ‘checks’, the odds of being employed decrease by a factor of 0.6917.</em>
+<em>TPR: 4084/4111 = 0.9934, TNR: 16/1115 = 0.0144, Precision: 4084/5184 = 0.7878, Accuracy: (16+4084)/4111 = 0.9973</em>
+<em>Upon generating an ROC Curve, the AUC was found to be 0.6140 indicating this model to be a very poor model!</em></p>
+<pre class="r"><code>#head(data)
+#Changing &#39;released&#39; column from &lt;fct&gt; to &lt;int&gt;
+# levels(data$released)[levels(data$released)==&quot;No&quot;] &lt;- &quot;0&quot;
+# levels(data$released)[levels(data$released)==&quot;Yes&quot;] &lt;- &quot;1&quot;
+#data$released &lt;- as.numeric(as.character(data$released))
+#Changing &#39;sex&#39; column from &lt;fct&gt; to &lt;int&gt;
+# levels(data$sex)[levels(data$sex)==&quot;Male&quot;] &lt;- &quot;0&quot;
+# levels(data$sex)[levels(data$sex)==&quot;Female&quot;] &lt;- &quot;1&quot;
+# data$sex &lt;- as.numeric(as.character(data$sex))
+# #Changing &#39;employed&#39; column from &lt;fct&gt; to &lt;int&gt;
+# levels(data$employed)[levels(data$employed)==&quot;No&quot;] &lt;- &quot;0&quot;
+# levels(data$employed)[levels(data$employed)==&quot;Yes&quot;] &lt;- &quot;1&quot;
+# data$employed &lt;- as.numeric(as.character(data$employed))
+# #Changing &#39;citizen&#39; column from &lt;fct&gt; to &lt;int&gt;
+# levels(data$citizen)[levels(data$citizen)==&quot;No&quot;] &lt;- &quot;0&quot;
+# levels(data$citizen)[levels(data$citizen)==&quot;Yes&quot;] &lt;- &quot;1&quot;
+# data$citizen &lt;- as.numeric(as.character(data$citizen))
+# 
+# 
+# 
+# 
+# library(glmnet)
+# y&lt;-as.matrix(data$colour)
+# x&lt;-data%&gt;%dplyr::select(-X,-colour)%&gt;%mutate_all(scale)%&gt;%as.matrix()
+# cv&lt;-cv.glmnet(x,y) 
+# 
+# lasso1&lt;-glmnet(x,y,lambda=cv$lambda.1se)
+# coef(lasso1)
+# 
+# #year / age / sex are less important predictors of colour 
+# newdat &lt;- data %&gt;% select(-year, -age, -sex)
+# set.seed(1234)
+# k=10 #choose number of folds
+# data1&lt;-newdat[sample(nrow(newdat)),] #randomly order rows
+# folds&lt;-cut(seq(1:nrow(newdat)),breaks=k,labels=F) #create folds
+# diags&lt;-NULL
+# for(i in 1:k){
+#  ## Create training and test sets
+#  train&lt;-data1[folds!=i,]
+#  test&lt;-data1[folds==i,]
+#  truth&lt;-test$colour
+#  ## Train model on training set
+#  fit&lt;-glm(colour~.,data=train,family=&quot;binomial&quot;)
+#  probs&lt;-predict(fit,newdata = test,type=&quot;response&quot;)
+#  ## Test model on test set (save all k results)
+#  diags&lt;-rbind(diags,class_diag(probs,truth))
+# }
+# diags%&gt;%summarize_all(mean)</code></pre>
+<p>##6.</p>
+<p><em>Upon running a LASSO regression on my data, it become evident that year, age, and sex were less important predictors of a person’s race.</em></p>
+<pre class="r"><code>#permutation via adonis 
+
+#distances/dissimilarities
+#dists&lt;-data%&gt;%select(age,checks)%&gt;%dist()
+
+#perform PERMANOVA on distances/dissimilarities on a subset of the data
+#adonis(dists~colour, TRUE, data=sample(data))
+
+
+#Finding observed F distribution
+#dataPerm &lt;- data %&gt;% select(-X, -released, -year, -sex, -employed, -citizen)
+#dist&lt;-vegdist(sqrt(dataPerm[,-c(1)]),method=&quot;bray&quot;) #sqrt to minimize influence of big abundances
+#dist0&lt;-vegdist(sqrt(dataPerm[dataPerm$colour==&quot;0&quot;,-c(1)]),method=&quot;bray&quot;)
+#dist1&lt;-vegdist(sqrt(dataPerm[dataPerm$colour==&quot;1&quot;,-c(1)]),method=&quot;bray&quot;)
+#SSR&lt;-sum(dist0^2)/3938+sum(dist1^2)/1288
+#SST&lt;-sum(dist^2)/5226
+#Fstat&lt;-(SST-SSR)/(SSR/5224)
+
+#Fstat #= 117.6371 observed
+
+#Histogram of observed 
+
+
+#Null distribution of F
+#perm.sampdist&lt;-replicate(5000,{
+#new&lt;-data %&gt;% select(X, released, year, sex, employed, citizen, colour, age, checks)
+#new$colour&lt;-sample(data$colour)
+#dist&lt;-vegdist(sqrt(new[,-c(1:7)]),method=&quot;bray&quot;)
+#dist0&lt;-vegdist(sqrt(new[new$colour==&quot;0&quot;,-c(1:7)]),method=&quot;bray&quot;)
+#dist1&lt;-vegdist(sqrt(new[new$DIVERSITY==&quot;1&quot;,-c(1:7)]),method=&quot;bray&quot;)
+#SSR&lt;-sum(dist0^2)/3938+sum(dist1^2)/1288
+#SST&lt;-sum(dist^2)/5226
+#(SST-SSR)/(SSR/5223)
+#} )
+
+#mean(perm.sampdist&gt;Fstat)</code></pre>
+<p>##2.</p>
+<p><em>A randomization test was performed both by hand and by using the adonis() function from the vegan package.</em>
+<em>H0: F = 117.6371 (as observed)</em>
+<em>Ha: F =/= 117.6371</em>
+<em>Computation by way of adonis yielded interestubf results. the F statistic was indicated as 28.16. Manual computation of the F statistic </em></p>

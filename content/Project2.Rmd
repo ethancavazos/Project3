@@ -1,0 +1,319 @@
+---
+title: "Project 2"
+author: "Ethan Cavazos"
+date: "11/18/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+hook_output = knit_hooks$get('output')
+knit_hooks$set(output = function(x, options) {
+  # this hook is used only when the linewidth option is not NULL
+  if (!is.null(n <- options$linewidth)) {
+    x = knitr:::split_lines(x)
+    # any lines wider than n should be wrapped
+    if (any(nchar(x) > n)) x = strwrap(x, width = n)
+    x = paste(x, collapse = '\n')
+  }
+  hook_output(x, options)
+})
+
+knitr::opts_chunk$set(echo = TRUE, eval = TRUE,fig.align="center",warning=FALSE,message=FALSE,fig.width=8, fig.height=5, linewidth=60)
+options(tibble.width = 100,width = 100)
+
+library(tidyverse)
+library(dplyr)
+library(sandwich)
+library(lmtest)
+library(vegan)
+library(adegenet)
+```
+
+```{r data, echo =  FALSE}
+data <- read.csv("Arrests.csv")
+
+
+#eyeballing multivariate normality
+multi_v_plot <- ggplot(data, aes(x = checks, y = age)) + geom_point(alpha = .5) + geom_density_2d(h=11) + coord_fixed() + facet_wrap(~colour)
+
+#Changing 'colour' column from <fct> to <int>
+levels(data$colour)[levels(data$colour)=="White"] <- "0"
+levels(data$colour)[levels(data$colour)=="Black"] <- "1"
+data$colour <- as.numeric(as.character(data$colour))
+
+#Manova, significant (1)
+manova <- manova(cbind(age,checks) ~ colour, data = data)
+summary(manova)
+
+#univariate anova age and checks are signif (not year) (2)
+summary.aov(manova)
+data %>% group_by(colour) %>% summarise(mean(age),mean(checks))
+
+#t-tests (2), dont need ? 
+pairwise.t.test(data$age,data$colour, p.adj="none")
+
+pairwise.t.test(data$checks,data$colour, p.adj="none")
+
+#Bonferroni adjusted alpha = 0.01, eveyrthing is still significant 
+0.05/5
+```
+
+##0. 
+
+*Courtesy of https://vincentarelbundock.github.io/Rdatasets/datasets.html, I used the "Arrests" dataset. This dataset chronicles the arrests of more tha 5,000 individuals in Toronto for possession of marijuana. Each observation holds information on the year of the arrest, the 'colour' of the individual (noting them as black or white), the arrestees age, sex, employment status, citizen status, as well as the number of times that individual showed up in the police department's database ('checks').  *
+
+##1. 
+
+*A one-way multivariate analysis of variance (MANOVA) was conducted to determine if 'colour' - herein refered to as 'race' - has an effect on the age of the arrested individual as well as the number of checks that individual is likely to have. Bivariate density plots were constructed to assess normality and revealed the data to be likley non-normal. Covariance matrices were examined and revealed relative homogeneity between each group. No univariate and multivariate outliers were detected leading us to believe MANOVA to be an appropriate method of analysis.*
+
+*Significant differences were found among the two racial groups on measure of 'age' and 'checks', Pillai trace = .032, pseudo F(2, 5223) = 85.1136, p < 0.0001.*
+
+*Post-hoc analysis was performed by conducting pairwise comparisons to further evaluate differences between 'age' and 'checks'. Significant differences were found between each racial class and their recorded age and checks after adjusting for multiple comparisons (bonferroni).*
+
+*Assumptions of the MANOVA are plentiful and often hard to test or meet. It is likely that not all assumptions were met here. For example, a plot to evaluate normality was generated but it was unclear if whether or not normality could be confirmed. *
+
+
+```{r linear regression}
+
+#Linear Regression Model 
+#centered variables and interaction
+centeredcolour<- data$colour - mean(data$colour)
+centeredage<- data$age- mean(data$age)
+my_glm <- lm(checks ~ age + colour + centeredage * centeredcolour, data = data)
+  resids<-my_glm$residuals #save residuals
+  fitted<-my_glm$fitted.values
+summary(my_glm)
+
+ggplot(data, aes(x=as.numeric(as.character(age)), y=checks,group=colour))+geom_point(aes(color=colour)) +  stat_sum(aes(size = factor(..n..), color = colour), geom = "point") +
+  scale_size_discrete(range = c(1, 10))+
+ geom_smooth(method="lm",formula=y~1,se=F,fullrange=T,aes(color=colour))+
+theme(legend.position=c(.9,.19)) + xlab("Age in years")
+
+bptest(my_glm)
+#ks.test(resids, "pnorm", mean=0, sd(resids)) 
+
+#coeftest(my_glm, vcov=vcovHC(my_glm))
+
+#summary(my_glm)$adj.r.squared
+
+
+```
+##3. 
+
+*I chose to predict 'checks' from a person's age and racial status.*
+*Best-fitting line: Number of 'Checks' = 0.94 + 0.023(age) + 0.5(race)*
+*The data was found to be homoskedastic by way of bptest(). Additionally, the data is non-normal and non-linear.*
+*Using robust SEs, all results remained significant.*
+*The proportion of variation explained by this model is 0.046.*
+*In all, this model was an extremeley poor one to use to predict the number of checks of an individual.*
+```{r boostrapped}
+boot_dat<-data[sample(nrow(data),replace=TRUE),]
+samp_distn<-replicate(5000, {
+ boot_dat<-data[sample(nrow(data),replace=TRUE),]
+ fit<-lm(checks~age+colour+centeredage*centeredcolour,data=boot_dat)
+ coef(fit)
+})
+
+samp_distn%>%t%>%as.data.frame%>%summarize_all(sd)
+#compare to Robust SEs
+coeftest(my_glm, vcov=vcovHC(my_glm))
+#compare to reg SEs
+summary(my_glm)
+
+```
+##4. 
+
+*Between 'age' and 'colour', there were no significant differences between age SEs across all boards. However, robust SEs yielded a 10x increase for 'colour'.*
+```{r log reg}
+#install.packages("MASS")
+library(MASS)
+#install.packages("pROC")
+library(pROC)
+dataOriginal <- read.csv("Arrests.csv")
+
+#predicting employment status 
+logRegFit <- glm(employed ~ age + checks, data = dataOriginal, family = binomial("logit"))
+coeftest(logRegFit)
+#age:
+exp(-0.0249260)
+#checks
+exp(-0.3685933)
+
+class_diag<-function(probs,truth){
+ tab<-table(factor(probs>.5,levels=c("FALSE","TRUE")),truth)
+ acc=sum(diag(tab))/sum(tab)
+ sens=tab[2,2]/colSums(tab)[2]
+ spec=tab[1,1]/colSums(tab)[1]
+ ppv=tab[2,2]/rowSums(tab)[2]
+ if(is.numeric(truth)==FALSE & is.logical(truth)==FALSE) truth<-as.numeric(truth)-1
+ #CALCULATE EXACT AUC
+ ord<-order(probs, decreasing=TRUE)
+ probs <- probs[ord]; truth <- truth[ord]
+ TPR=cumsum(truth)/max(1,sum(truth))
+ FPR=cumsum(!truth)/max(1,sum(!truth))
+ dup<-c(probs[-1]>=probs[-length(probs)], FALSE)
+ TPR<-c(0,TPR[!dup],1); FPR<-c(0,FPR[!dup],1)
+ n <- length(TPR)
+ auc<- sum( ((TPR[-1]+TPR[-n])/2) * (FPR[-1]-FPR[-n]) )
+ data.frame(acc,sens,spec,ppv,auc)
+} 
+
+
+prob <- predict(logRegFit, type = "response")
+class_diag(prob, dataOriginal$employed)
+
+confTable <- table(predict = as.numeric(prob > 0.5), truth = dataOriginal$employed) %>%
+ addmargins
+confTable
+
+#Sensitivity (TPR) = 4084/4111
+#Specificty (TNR) = 16/1115
+#Precision = 4084/5184
+#acuracy (16+4084)/4111
+
+ggplot(data, aes(age,prob))+geom_point(aes(color=colour),alpha=.5,size=3)+
+ geom_rug(aes(color=colour),alpha=.5,sides="right")+geom_hline(yintercept=.1)
+
+library(plotROC) 
+#install.packages("plotROC")
+
+#ROC
+ROCplot<-ggplot(data)+geom_roc(aes(d=colour,m=checks), n.cuts=0)
+ROCplot
+calc_auc(ROCplot)
+
+
+#10-fold CV
+set.seed(1234)
+k = 10
+data1 <- data[sample(nrow(data)), ] #this randomly orders rows
+folds <- cut(seq(1:nrow(data)), breaks = k, labels = F) #this creates folds
+diags <- NULL
+for (i in 1:k) {
+
+ ## Creating the training and testing sets
+
+ train <- data1[folds != i, ]
+ test <- data1[folds == i, ]
+ truth <- test$colour
+
+ ## Train model on training set
+
+ fit <- glm(colour ~ ., data = train, family = "binomial")
+ probs <- predict(fit, newdata = test, type = "response")
+
+ ## Test model on test set (save all k results)
+ diags <- rbind(diags, class_diag(probs, truth))
+}
+apply(diags, 2, mean)
+
+
+```
+##5
+
+*Predicting employment status from 'age' and 'checks':*
+*For every one-unit increase in age, the odds of being employed decrease by a factor of 0.9754. And for every one-unit increase in 'checks', the odds of being employed decrease by a factor of 0.6917.*
+*TPR: 4084/4111 = 0.9934, TNR: 16/1115 = 0.0144, Precision: 4084/5184 = 0.7878, Accuracy: (16+4084)/4111 = 0.9973*
+*Upon generating an ROC Curve, the AUC was found to be 0.6140 indicating this model to be a very poor model!*
+```{r LASSO}
+#head(data)
+#Changing 'released' column from <fct> to <int>
+# levels(data$released)[levels(data$released)=="No"] <- "0"
+# levels(data$released)[levels(data$released)=="Yes"] <- "1"
+#data$released <- as.numeric(as.character(data$released))
+#Changing 'sex' column from <fct> to <int>
+# levels(data$sex)[levels(data$sex)=="Male"] <- "0"
+# levels(data$sex)[levels(data$sex)=="Female"] <- "1"
+# data$sex <- as.numeric(as.character(data$sex))
+# #Changing 'employed' column from <fct> to <int>
+# levels(data$employed)[levels(data$employed)=="No"] <- "0"
+# levels(data$employed)[levels(data$employed)=="Yes"] <- "1"
+# data$employed <- as.numeric(as.character(data$employed))
+# #Changing 'citizen' column from <fct> to <int>
+# levels(data$citizen)[levels(data$citizen)=="No"] <- "0"
+# levels(data$citizen)[levels(data$citizen)=="Yes"] <- "1"
+# data$citizen <- as.numeric(as.character(data$citizen))
+# 
+# 
+# 
+# 
+# library(glmnet)
+# y<-as.matrix(data$colour)
+# x<-data%>%dplyr::select(-X,-colour)%>%mutate_all(scale)%>%as.matrix()
+# cv<-cv.glmnet(x,y) 
+# 
+# lasso1<-glmnet(x,y,lambda=cv$lambda.1se)
+# coef(lasso1)
+# 
+# #year / age / sex are less important predictors of colour 
+# newdat <- data %>% select(-year, -age, -sex)
+# set.seed(1234)
+# k=10 #choose number of folds
+# data1<-newdat[sample(nrow(newdat)),] #randomly order rows
+# folds<-cut(seq(1:nrow(newdat)),breaks=k,labels=F) #create folds
+# diags<-NULL
+# for(i in 1:k){
+#  ## Create training and test sets
+#  train<-data1[folds!=i,]
+#  test<-data1[folds==i,]
+#  truth<-test$colour
+#  ## Train model on training set
+#  fit<-glm(colour~.,data=train,family="binomial")
+#  probs<-predict(fit,newdata = test,type="response")
+#  ## Test model on test set (save all k results)
+#  diags<-rbind(diags,class_diag(probs,truth))
+# }
+# diags%>%summarize_all(mean)
+
+
+```
+##6.
+
+*Upon running a LASSO regression on my data, it become evident that year, age, and sex were less important predictors of a person's race.*
+
+```{r permanova by hand}
+#permutation via adonis 
+
+#distances/dissimilarities
+#dists<-data%>%select(age,checks)%>%dist()
+
+#perform PERMANOVA on distances/dissimilarities on a subset of the data
+#adonis(dists~colour, TRUE, data=sample(data))
+
+
+#Finding observed F distribution
+#dataPerm <- data %>% select(-X, -released, -year, -sex, -employed, -citizen)
+#dist<-vegdist(sqrt(dataPerm[,-c(1)]),method="bray") #sqrt to minimize influence of big abundances
+#dist0<-vegdist(sqrt(dataPerm[dataPerm$colour=="0",-c(1)]),method="bray")
+#dist1<-vegdist(sqrt(dataPerm[dataPerm$colour=="1",-c(1)]),method="bray")
+#SSR<-sum(dist0^2)/3938+sum(dist1^2)/1288
+#SST<-sum(dist^2)/5226
+#Fstat<-(SST-SSR)/(SSR/5224)
+
+#Fstat #= 117.6371 observed
+
+#Histogram of observed 
+
+
+#Null distribution of F
+#perm.sampdist<-replicate(5000,{
+#new<-data %>% select(X, released, year, sex, employed, citizen, colour, age, checks)
+#new$colour<-sample(data$colour)
+#dist<-vegdist(sqrt(new[,-c(1:7)]),method="bray")
+#dist0<-vegdist(sqrt(new[new$colour=="0",-c(1:7)]),method="bray")
+#dist1<-vegdist(sqrt(new[new$DIVERSITY=="1",-c(1:7)]),method="bray")
+#SSR<-sum(dist0^2)/3938+sum(dist1^2)/1288
+#SST<-sum(dist^2)/5226
+#(SST-SSR)/(SSR/5223)
+#} )
+
+#mean(perm.sampdist>Fstat)
+```
+
+##2. 
+
+*A randomization test was performed both by hand and by using the adonis() function from the vegan package.*
+*H0: F = 117.6371 (as observed)*
+*Ha: F =/= 117.6371*
+*Computation by way of adonis yielded interestubf results. the F statistic was indicated as 28.16. Manual computation of the F statistic *

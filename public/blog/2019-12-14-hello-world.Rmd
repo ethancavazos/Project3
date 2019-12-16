@@ -1,0 +1,43 @@
+---
+title: Hello World!
+author: Ethan Cavazos
+date: '2019-12-14'
+slug: hello-world
+categories: []
+tags: []
+description: 'Blog post #1!'
+---
+Hi Everyone!
+
+In SDS 348, we learned a LOT of cool things. My favorite adventure in the class was definitely learning Python! I had particular fun with it because I already had some knowledge from CS303E. It was really awesome to see how I could apply what I thought of as "traditional" python programming to RStudio since our entry-level biostatistics class is taught a bit differenetly than the comp-sci one. 
+
+Anyway! Here lies my favorite homework problem! I thought it was a really nice union between programming and molecular bioscience. 
+```{r setup, include = FALSE}
+library(reticulate)
+reticulate::use_python("C:\\Users\\edog\\AppData\\Local\\Programs\\Python\\Python36\\python.exe",required=TRUE)
+```
+
+#Find all 3-mers in these two sequences
+
+```{python}
+my_seq1 = "ATCATCATG"
+my_seq2 = "CAGCCCAATCAGGCTCTACTGCCACTAAACTTACGCAGGATATATTTACGCCGACGTACT"
+def kmers(seq, k):
+
+
+    counts = {}
+    kmers = len(seq) - k + 1
+
+
+    for i in range(kmers):
+
+        kmer = seq[i:i+k]
+
+        if kmer not in counts:
+            counts[kmer] = 0
+        counts[kmer] += 1
+```
+
+We did learn a lot of other really cool things, though. I'll definitely be re-formatting my blog posts and tailor each one to specific topics and helpful pieces of code for subjects like regex, regressions, dplyr, etc. 
+
+I would also like to link some pictures of my research adventures to some posts (see below) so please stay tuned! :-)

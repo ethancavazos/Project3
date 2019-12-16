@@ -1,0 +1,941 @@
+---
+title: "project 1"
+author: "Ethan Cavazos"
+date: "10/10/2019"
+output: html_document
+---
+
+
+
+<div id="project-1" class="section level2">
+<h2>Project 1</h2>
+<pre class="r"><code>#intro! :D
+#terrorist group data 
+terrorG &lt;- read.csv(&quot;TerroristGroups.csv&quot;, header=TRUE, sep=&quot;,&quot;)
+
+
+#Global Terrorism Database information
+trrGTD1 &lt;- read.csv(&quot;GlobalTerrorismDatabase.csv&quot;, header=TRUE, sep=&quot;,&quot;)
+trrGTD &lt;- trrGTD1[sample(1:nrow(trrGTD1), 100,
+   replace=FALSE),]
+#glimpse(trrGTD)
+
+#common variable = country!</code></pre>
+</div>
+<div id="preparing-my-data" class="section level1">
+<h1>Preparing my Data:</h1>
+<p>Preface:</p>
+<p>In the following chunks I performed a few operations that ultimately reduced the size and complexity of these sets. This is because I have enormous difficulty with visualizing and understanding large sets of data. Additionally, I was more interested in some variables and countries than others and thought I would have more fun working with reduced sets.</p>
+<p>The sets of data I chose were on terrorist groups and attacks. The first is from a data set provided by Joshua Tchantret (<a href="https://jtschantret.com/data/" class="uri">https://jtschantret.com/data/</a>) and the second was from a set in the Gloabl Terrorism Database (GTD)! The first set contained information on historical terror groups relevant between 1860-1969 suh as: group name, ideology, country, ambiguity status, and Start and End year. The most interesting information from this set was its ambiguity status. I had never imagined that a terror group might be undefined in our understanding of its allignment! I was intrigued to say the least but you might see that later on.</p>
+<p>The second set was from the GTD had tons of data on terrorist attacks from around the world. It had so many variables, I was fairly overwhelmed. Beside their shared variable ‘Country’, this data set had many, many other variables such as: City, region, who the attack was on, outcome of attack (description), target of attack, nationality of the attack target, etectera. This data set I found more confusing not only due to its size but by the existence of secondary and tertiary variables. For example, for its Attack-Type variable, it also conatained 2 additional variables that I assumed were for further categorization or tagging to make searches more accurate. However, the frequency at which variables contained even a second data point - let alone a third - was extremely low!</p>
+<p>Towrap up, I chose these datasets because I wanted to evaluate something interesting (world events), relevant, and understandable. I had spent many hours looking at sets with data on drugs, side effetcts, and everything related and I found myslef spending a disproportionate amount of time studying related topics to understand the data. Between the two sets, I do expect to see similarities between countries in terms of attack events and terror groups but I can see that the data is fairly different and this is all I am expecting before diving in.</p>
+<pre><code>##                      Country
+## 1                        USA
+## 2                     Russia
+## 3                        USA
+## 4                        USA
+## 5                        USA
+## 6                     Russia
+## 7                      China
+## 8                        USA
+## 9                        USA
+## 10                       USA
+## 11                     India
+## 12                       USA
+## 13                    Russia
+## 14                    Russia
+## 15                    Russia
+## 16                    Russia
+## 17                    France
+## 18                Ireland/US
+## 19                    Japan 
+## 20                        UK
+## 21                    France
+## 22            Russia/ Poland
+## 23                     Spain
+## 24                    France
+## 25                    Russia
+## 26                    Russia
+## 27            Ottomon Empire
+## 28                    Russia
+## 29                    Russia
+## 30            Ottomon Empire
+## 31    Russia/ Ottomon Empire
+## 32                 Argentina
+## 33             Russia/France
+## 34                    France
+## 35            Ottomon Empire
+## 36                     India
+## 37            Ottomon Empire
+## 38            Ottomon Empire
+## 39            Ottomon Empire
+## 40            Ottomon Empire
+## 41                    Russia
+## 42            Ottomon Empire
+## 43                    Russia
+## 44                    Russia
+## 45                    Japan 
+## 46                    Russia
+## 47                    Serbia
+## 48                     India
+## 49                    Russia
+## 50                     India
+## 51                    Russia
+## 52                    Russia
+## 53                    Russia
+## 54                        UK
+## 55                    Serbia
+## 56            Russia/Finland
+## 57                    Russia
+## 58                     Spain
+## 59                     Egypt
+## 60                     India
+## 61                    Russia
+## 62                    Russia
+## 63                    Russia
+## 64                    Russia
+## 65                    Russia
+## 66                    Russia
+## 67                    Russia
+## 68                    Russia
+## 69                     Spain
+## 70                        UK
+## 71                     India
+## 72                    Mexico
+## 73                    Russia
+## 74                    Russia
+## 75                    Russia
+## 76                    Russia
+## 77                    Russia
+## 78                       USA
+## 79                     India
+## 80                    Russia
+## 81                    Russia
+## 82                    Russia
+## 83                    Russia
+## 84           Russia (Poland)
+## 85  Bosnia (Austria-Hungary)
+## 86                    Mexico
+## 87                  Portugal
+## 88                    Russia
+## 89                    Serbia
+## 90                 Argentina
+## 91                     China
+## 92                    Japan 
+## 93           Russia (Poland)
+## 94                     Spain
+## 95                    France
+## 96     Ottomon Empire/France
+## 97                    Serbia
+## 98                    Serbia
+## 99                        UK
+## 100           Ottomon Empire
+## 101                       UK
+## 102                       UK
+## 103                      USA
+## 104                    Egypt
+## 105           Ottomon Empire
+## 106                      USA
+## 107                      USA
+## 108                       UK
+## 109                    Egypt
+## 110                    Italy
+## 111                    China
+## 112              Mand Palest
+## 113                    Spain
+## 114                  Germany
+## 115                    China
+## 116                    Italy
+## 117                   Canada
+## 118                  Ireland
+## 119                   Japan 
+## 120        USA (Puerto Rico)
+## 121                    Spain
+## 122                 Bulgaria
+## 123                    China
+## 124                  Germany
+## 125                   Japan 
+## 126                    China
+## 127                      USA
+## 128                   Japan 
+## 129                Argentina
+## 130                    China
+## 131                    India
+## 132                  Romania
+## 133                    Spain
+## 134                    India
+## 135                   India 
+## 136                  Austria
+## 137              Mand Palest
+## 138               Yugoslavia
+## 139                   Japan 
+## 140              Mand Palest
+## 141                    China
+## 142                    China
+## 143                    China
+## 144                    China
+## 145                    China
+## 146                    China
+## 147                     Cuba
+## 148              Mand Palest
+## 149              Mand Palest
+## 150                    China
+## 151              Mand Palest
+## 152                   Japan 
+## 153              Afghanistan
+## 154                    China
+## 155                    Egypt
+## 156                    Spain
+## 157                    Spain
+## 158              Mand Palest
+## 159                   France
+## 160                    China
+## 161                    China
+## 162                    China
+## 163                    China
+## 164                   France
+## 165                   France
+## 166              Mand Palest
+## 167             South Africa
+## 168               Yugoslavia
+## 169                Indonesia
+## 170                   Israel
+## 171                      USA
+## 172                  Algeria
+## 173                   Israel
+## 174                      USA
+## 175                   Israel
+## 176                    China
+## 177                   France
+## 178                     Cuba
+## 179                   Israel
+## 180                  Algeria
+## 181                  Algeria
+## 182                   Cyprus
+## 183                    India
+## 184                      USA
+## 185                    Italy
+## 186                    Italy
+## 187         Palestine/ Egypt
+## 188    Syria, Egypt, Lebanon
+## 189                    Spain
+## 190                      USA
+## 191                Argentina
+## 192     Mozambique, Portugal
+## 193                   Canada
+## 194                      USA
+## 195                Guatemala
+## 196                   Brazil
+## 197                  Burundi
+## 198 Eritrea, Ethiopia, Egypt
+## 199                  Germany
+## 200                 Portugal
+## 201             South Africa
+## 202                   Canada
+## 203                      USA
+## 204                   Japan 
+## 205                       UK
+## 206                       UK
+## 207                   France
+## 208                 Thailand
+## 209                   Angola
+## 210                Australia
+## 211                  Uruguay
+## 212                  Algeria
+## 213                   Canada
+## 214                  Algeria
+## 215                 Colombia
+## 216                 Colombia
+## 217                Palestein
+## 218                      USA
+## 219                      USA
+## 220                   Brazil
+## 221                Indonesia
+## 222                    Syria
+## 223                Argentina
+## 224                  Bolivia
+## 225                   France
+## 226                  Ireland
+## 227                    Syria
+## 228              North Yemen
+## 229                    Syria
+## 230                      USA
+## 231                      USA
+## 232                    Chile
+## 233        Somalia, Djibouti
+## 234           Egypt, Lebanon
+## 235                    India
+## 236                   Greece
+## 237                  Lebanon
+## 238                Argentina
+## 239                   Brazil
+## 240                   Brazil
+## 241                   Brazil
+## 242                    Chile
+## 243            United States
+## 244                      USA
+## 245                   France
+## 246                   France
+## 247                  Germany
+## 248           Iraq/Palestine
+## 249           Lebanon, Syria
+## 250       Malaysia, Thailand
+## 251                Palestine
+## 252                       UK
+## 253                      USA
+## 254                      USA
+## 255                      USA
+## 256                   Brazil
+## 257                    India
+## 258               Aregentina
+## 259                    Italy
+## 260                   Japan 
+## 261                   Japan 
+## 262              Philippines
+## 263                       UK
+## 264              Philippines
+## 265                      USA
+## 266                      USA
+## 267                Venezuela
+## 268                  Lebanon
+## 269                         
+## 270                         
+##                                                                           Group
+## 1                                                                Molly Maguires
+## 2                                                       The Organization (Hell)
+## 3                                                                Ku Klux Klan I
+## 4                                                                Southern Cross
+## 5                                                 Knights of the White Camellia
+## 6                                     People&#39;s Retribution (Society of the Axe)
+## 7                                                       Elder Brother&#39;s Society
+## 8                                                                  Clan na Gael
+## 9                                                                The White Line
+## 10                                                                 White League
+## 11                                                                      Ramoshi
+## 12                                                                   Red Shirts
+## 13                                                             Land and Freedom
+## 14                        Executive Committee of the Social Revolutionary Party
+## 15                                                            Black Repartition
+## 16                                                                People&#39;s Will
+## 17                                                   The Panther of Batignolles
+## 18                                                                  Skirmishers
+## 19                                               Genyosha (Black Ocean Society)
+## 20                                                   Irish National Invincibles
+## 21                                                                   Bande Noir
+## 22                                                            Proletariat Party
+## 23                                                                   Mano Negra
+## 24                                                      Les Egaux de Montmartre
+## 25                                                          Liberation of Labor
+## 26                                       Terrorist Faction of the People&#39;s Will
+## 27                                             Social Democrat Hunchakian Party
+## 28                                                           Ulyanov Conspiracy
+## 29                                                     Second Proletariat Party
+## 30                                              Committee of Union and Progress
+## 31                                            Armenian Revolutionary Federation
+## 32                                                          Radical Civic Union
+## 33                                                       Polish Socialist Party
+## 34                                                                 Les Revoltes
+## 35                                                  Internal Macedonian Rev Org
+## 36  Society for the Removal of Obstacles to the Hindu Religion (Chapekar Group)
+## 37                                      Supreme Macedonian-Adrianople Committee
+## 38                                                  Ottoman Revolutionary Party
+## 39                                   Bulgarian Secret Revolutionary Brotherhood
+## 40                                                        Society against Serbs
+## 41                                        Russian Social Democratic Labor Party
+## 42                                                        Assassins of Salonica
+## 43                                                              Socialist Union
+## 44                                         Polish Socialist Party &quot;Proletariat&quot;
+## 45                                          Black Dragon Society (Amur Society)
+## 46                                              Polish Workers&#39; Socialist Party
+## 47                                                                   Black Hand
+## 48                                                             Anushilan Samiti
+## 49                                   Socialist Revolutionary Party (Combat Org)
+## 50                                                       Abhinav Bharat Society
+## 51                                               International Group &quot;Struggle&quot;
+## 52                                                          Uncompromising Ones
+## 53                                                                 Black Banner
+## 54                                           Women&#39;s Social and Political Union
+## 55                                                            Serbian Committee
+## 56                                           Finnish Party of Active Resistance
+## 57                                         Combat Org of Polish Socialist Party
+## 58                                                             Comite de Accion
+## 59                                              Society of Fraternal Solidarity
+## 60                                    Dhaka Anushilan Samiti (Amushilan Samiti)
+## 61                                                                       Horror
+## 62                                                         Death to the Capital
+## 63                                                                 Red Hundreds
+## 64                                             Without Authority (Black Banner)
+## 65                                 Union of the Russian People (Black Hundreds)
+## 66                                                    Georgian Social Democrats
+## 67                                       Independent Socialists-Revolutionaries
+## 68                                                              Death for Death
+## 69                                                          Juventud Libertaria
+## 70                                                                  India House
+## 71                                                                     Jugantar
+## 72                                                               Obreros Libres
+## 73                                            Caucasian All Muslim Union (Dfai)
+## 74                                                    Federal Committee of Riga
+## 75                                        Prawica (PPS - Revolutionary Faction)
+## 76                                                                 Black Terror
+## 77                          Terror Group of the City of Tiflis and its Counties
+## 78                         International Association of Bridge and Iron Workers
+## 79                                                              Maniktala Group
+## 80                                                        Anarchist Black Cross
+## 81                                           Group of Terrorists-Expropriators 
+## 82                                                       League of the Red Fuse
+## 83                                                               Green Hundreds
+## 84                          Warsaw Group of Anarchists-Communists-International
+## 85                                                                 Young Bosnia
+## 86                                                    Junta Organization de PLM
+## 87                                                                   Costa Cell
+## 88                                                     Union of Active Struggle
+## 89                                                              Narodna Odbrana
+## 90                                                        Argenitian Anarchists
+## 91                                                  Chinese Assassination Corps
+## 92                                                          Japanese Anarchists
+## 93                                                       Revolutionary Avengers
+## 94                                     Confederacion Nacional del Trabajo (CNT)
+## 95                                                              The Bonnot Gang
+## 96                                                           Young Arab Society
+## 97                                                                   Black Hand
+## 98                                                                 Young Bosnia
+## 99                                                            Uslter Volunteers
+## 100                                                            Covenant Society
+## 101                                                            Irish Volunteers
+## 102                                                      Ulster Volunteer Force
+## 103                                                                Ghadar Party
+## 104                                              Society of the Arab Revolution
+## 105                                                        The Banner&#39;s Society
+## 106                                                      Galleanisti Anarchists
+## 107                                                             Ku Klux Klan II
+## 108                                                     Irish Republican Army I
+## 109                                                                  Wafd Party
+## 110                                                                  Red Guards
+## 111                                                 Uiyeoldan (Righteous Group)
+## 112                                                                     Haganah
+## 113                                                             Los Justicieros
+## 114                                                         Organisation Consul
+## 115                                                          Black Youth League
+## 116                                                           Arditi del Popolo
+## 117                                                      Ku Klux Klan of Canada
+## 118                                                    Irish Republican Army II
+## 119                                                          Guillotine Society
+## 120                                              Puerto Rican Nationalist Party
+## 121                                                              Los Solidarios
+## 122                                  Shestorki of the Bulgarian Communist Party
+## 123                                                                    Damuldan
+## 124                                                               Viking League
+## 125                                                      Society of Malcontents
+## 126                                    Society of Taiwanese and Korean Comrades
+## 127                                                                Black Legion
+## 128                                                     Young Officers Movement
+## 129                                                  Culmine (Di Giovanni cell)
+## 130                                                            Red Terror Squad
+## 131                              Naujawan Bharat Sabha (Youth Society of India)
+## 132                                                                  Iron Guard
+## 133                                          Iberian Anarchist Federation (FAI)
+## 134                                                           Bengal Volunteers
+## 135                                        Hindustan Socialist Republican Assoc
+## 136                                       Organization of Ukranian Nationalists
+## 137                                                              The Green Hand
+## 138                                                                      Ustaše
+## 139                                                     Sakura (Cherry Society)
+## 140                                                                  Black Hand
+## 141                                       League of Korean Youth in South China
+## 142                                               Korean Patriotic Organization
+## 143                             League of Resisting Japan and Saving the Nation
+## 144                                                        Vigorous Blood Group
+## 145                                                  Eradicating Traitors Group
+## 146                                 Black Terror Group (Possibly part of LKYSC)
+## 147                                                                         ABC
+## 148                                                                       Irgun
+## 149                                                        Army of the Holy War
+## 150                                                         Blue Shirts Society
+## 151                                                       Holy War Organization
+## 152                                                     League of Blood Society
+## 153                                                          Abdul Khaliq Group
+## 154                                                       Black Terrorist Party
+## 155                                                                 Young Egypt
+## 156                                                             Spanish Phalanx
+## 157                                                        Falange (pistoleros)
+## 158                                                              Avenging Youth
+## 159                         Comité Secret d’Action Révolutionnaire (La Cagoule)
+## 160                                                      Special Services Corps
+## 161                               Chinese Youths National Salvation Association
+## 162                                                          Yellow Way Society
+## 163                                 Blood and Soul Traitors-Extermination Corps
+## 164                                                        Compagnie du Mystère
+## 165                                            Mouvement Social Révolutionnaire
+## 166                                                                        Lehi
+## 167                                                                  Stormjaers
+## 168                                                                    Chetniks
+## 169                                                                 Darul Islam
+## 170                                                                       Nakam
+## 171                                                              The Columbians
+## 172                                                        Special Organization
+## 173                                                               Brit HaKanaim
+## 174                                                            Ku Klux Klan III
+## 175                                                        Palestinian Fedayeen
+## 176                                                                   Doumu Tan
+## 177                                                                    Red Hand
+## 178                                                       26th of July Movement
+## 179                                                           Kingdom of Israel
+## 180                                 Revolutionary Committee of Unity and Action
+## 181                                                                         FLN
+## 182                                                                        EOKA
+## 183                                                                Ananda Marga
+## 184                                    Original Ku Klux Klan of the Confederacy
+## 185                                   South Tyrolean Liberation Committee (BAS)
+## 186                                                                Ordine Nuovo
+## 187                                                                    al-Fatah
+## 188                                                  Palestine Liberation Front
+## 189                                                                         ETA
+## 190                                            Cuban Nationalist Movement (CNM)
+## 191                                                 People&#39;s Revolutionary Army
+## 192                                                  Armed Revolutionary Action
+## 193                                           Brigade d&#39;autodéfense du français
+## 194                                                     United Klans of America
+## 195                                                          Rebel Armed Forces
+## 196                                                   Communist Party of Brazil
+## 197                                                                     Inyenzi
+## 198                                                   Eritrean Liberation Front
+## 199                                                        Gruppe um Dr. Burger
+## 200                                                       Henrique Galvão Group
+## 201                                                                    MK (ANC)
+## 202                                         Front de Liberation du Quebec (FLQ)
+## 203                                                                    Alpha 66
+## 204                                                                   Chukakuha
+## 205                                                      Mudiad Amddiffyn Cymru
+## 206                                                               Band of Mercy
+## 207                                                     Breton Liberation Front
+## 208                                                  Barisan Revolusi Nasional 
+## 209                             Front for the Liberation of the Cabinda Enclave
+## 210                                    Croatian Revolutionary Brotherhood (CRB)
+## 211                                                                   Tupamaros
+## 212                                                   Front of Socialist Forces
+## 213                                                     Quebec Liberation Front
+## 214                                        Canary Islands Independence Movement
+## 215                                                                         ELN
+## 216                                                                        FARC
+## 217                        Popular Front for the Liberation of Palestine (PFLP)
+## 218                                                         Silver Dollar Group
+## 219                                                White Knights of Mississippi
+## 220                                              Popular Revolutionary Vanguard
+## 221                                                         Free Papua Movement
+## 222                                                       Phalanxes of Mohammed
+## 223                                                            Operativo Condor
+## 224                                                    National Liberation Army
+## 225                                  Federation for European Nationalist Action
+## 226                                                      Ulster Volunteer Force
+## 227                                                                    Al-Saiqa
+## 228                                                      Arabian People&#39;s Union
+## 229                                                                    As-Saiqa
+## 230                                                              Black Panthers
+## 231                                    Independent Armed Revolutionary Movement
+## 232                                    Movement of the Revolutionary Left (MIR)
+## 233                         Front for the Liberation of the French Somali Coast
+## 234                                             Islamic Liberation Organization
+## 235                                                     All Bodo Students Union
+## 236                                                                 Free Greeks
+## 237                                          Palestinian Popular Struggle Front
+## 238                           Frente de Liberacion Nacional del Vietnam del Sur
+## 239                                                                VAR-Palmares
+## 240                                                Alianca Libertadora Nacional
+## 241                                             Revolutionary Movement of Oct 8
+## 242                                                 People&#39;s Organized Vanguard
+## 243                                                                 Cuban Power
+## 244                                                Armed Commando of Liberation
+## 245                                                           March 22 Movement
+## 246                                                            Proletarian Left
+## 247                                                            Red Army Faction
+## 248                                                       Arab Liberation Front
+## 249                           Popular Front for the Liberation of Palestine, GC
+## 250                                      Pattani United LIberation Organization
+## 251                            Democratic Front for the Liberation of Palestine
+## 252                                                               Angry Brigade
+## 253                                                      Republic of New Africa
+## 254                                           Up Against the Wall Motherfuckers
+## 255                                                       Jewish Defense League
+## 256                                                       Democratic Resistance
+## 257                                                     Maoist Communist Center
+## 258                                                 People&#39;s Revolutionary Army
+## 259                                                           October 22 Circle
+## 260                                                            Red Army Faction
+## 261                                                                   Kakurokyo
+## 262                                                           New People&#39;s Army
+## 263                                                             Provisional IRA
+## 264                                              Moro National Liberation Front
+## 265                                                    Secret Army Organization
+## 266                                                              The Weathermen
+## 267                                                                    Red Flag
+## 268                                                                   Al-Tanzim
+## 269                                                                            
+## 270                            * denotes provincial level unit rather than city
+##                            City StrYear     Ideology Ambiguous
+## 1                Pennsylvania*     1862        Other         0
+## 2                        Moscow    1864    Anarchist         0
+## 3                       Pulaski    1865     Rightist         0
+## 4                   New Orleans    1865     Rightist         0
+## 5           Franklin, Louisiana    1867     Rightist         0
+## 6                        Moscow    1869      Leftist         0
+## 7                        Hunan*    1870        Other         1
+## 8                 New York City    1873  Nationalist         0
+## 9         Vicksburg Mississippi    1874     Rightist         0
+## 10                       Colfax    1874     Rightist         1
+## 11               Deccan Region*    1875  Nationalist         1
+## 12  Charleston and Mississippi*    1875     Rightist         1
+## 13             Saint Petersburg    1876      Leftist         0
+## 14               Kiev (Ukraine)    1878      Leftist         0
+## 15             Saint Petersburg    1879    Anarchist         0
+## 16             Saint Petersburg    1879    Anarchist         0
+## 17                        Paris    1880    Anarchist         1
+## 18                New York City    1881  Nationalist         0
+## 19             Tokyo / Fukuoka     1881  Nationalist         1
+## 20                       Dublin    1881  Nationalist         0
+## 21                Paris (Lyons)    1882    Anarchist         0
+## 22                       Warsaw    1882      Leftist         0
+## 23                    Andalusia    1882    Anarchist         1
+## 24                        Paris    1883    Anarchist         0
+## 25                       Geneva    1883      Leftist         1
+## 26             Saint Petersburg    1886      Leftist         0
+## 27                       Geneva    1887      Leftist         0
+## 28             Saint Petersburg    1887      Leftist         0
+## 29                 Warsaw/Paris    1888      Leftist         0
+## 30               Constantinople    1889  Nationalist         0
+## 31                       Tiflis    1890  Nationalist         0
+## 32                 Buenos Aires    1891      Leftist         0
+## 33                        Paris    1892      Leftist         1
+## 34                        Paris    1893    Anarchist         1
+## 35      Salonica (Thessaloniki)    1893  Nationalist         0
+## 36                         Pune    1895  Nationalist         0
+## 37                   Macedonia*    1895  Nationalist         0
+## 38                       Geneva    1897  Nationalist         0
+## 39      Salonica (Thessaloniki)    1897     Rightist         0
+## 40      Salonica (Thessaloniki)    1897  Nationalist         0
+## 41                        Minsk    1898      Leftist         0
+## 42      Salonica (Thessaloniki)    1898    Anarchist         0
+## 43                     Baltics*    1899      Leftist         0
+## 44               Lvov (Ukraine)    1900      Leftist         0
+## 45                        Tokyo    1901     Rightist         1
+## 46                       Warsaw    1901      Leftist         0
+## 47                     Belgrade    1901  Nationalist         0
+## 48                     Calcutta    1902  Nationalist         0
+## 49             Saint Petersburg    1902      Leftist         0
+## 50          Pune (maybe Nasik?)    1903  Nationalist         0
+## 51                     Belostok    1903    Anarchist         0
+## 52                       Odessa    1903    Anarchist         0
+## 53     Belostok, Odessa, Nezhin    1903    Anarchist         0
+## 54                   Manchester    1903      Leftist         0
+## 55                     Belgrade    1903  Nationalist         0
+## 56                     Helsinki    1904  Nationalist         0
+## 57                       Warsaw    1904      Leftist         0
+## 58                    Barcelona    1904    Anarchist         1
+## 59                        Cairo    1905  Nationalist         0
+## 60                        Dhaka    1905  Nationalist         0
+## 61             Georgia/Armenia*    1905    Anarchist         0
+## 62             Georgia/Armenia*    1905    Anarchist         0
+## 63                      Telavi     1905        Other         0
+## 64             Saint Petersburg    1905    Anarchist         0
+## 65             Saint Petersburg    1905     Rightist         0
+## 66                       Tiflis    1905      Leftist         0
+## 67                        Gomel    1905    Anarchist         0
+## 68             Saint Petersburg    1905    Anarchist         0
+## 69                    Barcelona    1905      Leftist         0
+## 70                       London    1905  Nationalist         1
+## 71                     Calcutta    1906  Nationalist         0
+## 72                      Orizaba    1906      Leftist         0
+## 73               North Caucasus    1906  Nationalist         0
+## 74                         Riga    1906        Other         0
+## 75                         Lvov    1906      Leftist         0
+## 76                         Kiev    1906    Anarchist         0
+## 77                       Tiflis    1906    Anarchist         0
+## 78                   Pittsburgh    1906    Anarchist         0
+## 79                     Calcutta    1907  Nationalist         0
+## 80                            .    1907    Anarchist         0
+## 81             Saint Petersburg    1907    Anarchist         0
+## 82                    Voronezh     1907      Leftist         1
+## 83                         Baku    1907    Anarchist         1
+## 84                       Warsaw    1907    Anarchist         0
+## 85                            .    1907  Nationalist         0
+## 86  Saint Louis (Mexico City??)    1908      Leftist         0
+## 87                       Lisbon    1908      Leftist         0
+## 88                         Lvov    1908    Anarchist         0
+## 89                            .    1908  Nationalist         0
+## 90                 Buenos Aires    1909    Anarchist         0
+## 91                    Hong Kong    1910    Anarchist         0
+## 92            Nagano Prefecture    1910    Anarchist         0
+## 93                         Lodz    1910    Anarchist         0
+## 94                    Barcelona    1910    Anarchist         0
+## 95                        Paris    1911    Anarchist         1
+## 96                        Paris    1911  Nationalist         0
+## 97                     Belgrade    1911  Nationalist         0
+## 98                     Belgrade    1911  Nationalist         0
+## 99                      Belfast    1912  Nationalist         1
+## 100                    Damascus    1913  Nationalist         0
+## 101                      Dublin    1913 Nationalist          0
+## 102                     Belfast    1913  Nationalist         1
+## 103                    Stockton    1913  Nationalist         1
+## 104                       Cairo    1914  Nationalist         0
+## 105                       Mosul    1914  Nationalist         0
+## 106               New York City    1914    Anarchist         0
+## 107                     Atlanta    1915     Rightist         0
+## 108                      Dublin    1917  Nationalist         0
+## 109                       Cairo    1918  Nationalist         0
+## 110                 Turin/Milan    1918    Anarchist         0
+## 111                    Shanghai    1919    Anarchist         0
+## 112                   Jerusalem    1920  Nationalist         0
+## 113               San Sebastian    1920    Anarchist         0
+## 114                      Munich    1921     Rightist         0
+## 115                    Shanghai    1921    Anarchist         0
+## 116                        Rome    1921      Leftist         0
+## 117                    Montreal    1922     Rightist         0
+## 118                      Dublin    1922  Nationalist         0
+## 119                       Osaka    1922    Anarchist         0
+## 120                    San Juan    1922  Nationalist         0
+## 121                   Barcelona    1922    Anarchist         0
+## 122                           .    1923      Leftist         0
+## 123                     Beijing    1923    Anarchist         0
+## 124                      Munich    1923     Rightist         0
+## 125                       Tokyo    1923    Anarchist         1
+## 126                    Shanghai    1924    Anarchist         0
+## 127              Bellaire, Ohio    1924     Rightist         0
+## 128                       Tokyo    1924        Other         1
+## 129                Buenos Aires    1925    Anarchist         0
+## 130                           .    1925      Leftist         0
+## 131                      Punjab    1926  Nationalist         0
+## 132                   Bucharest    1927     Rightist         1
+## 133                    Valencia    1927    Anarchist         0
+## 134                    Calcutta    1928  Nationalist         0
+## 135                   New Delhi    1928  Nationalist         0
+## 136                      Vienna    1929     Rightist         0
+## 137                       Safed    1929  Nationalist         0
+## 138                      Zagreb    1929     Rightist         0
+## 139                       Tokyo    1930     Rightist         1
+## 140                       Haifa    1930    Religious         0
+## 141                    Shanghai    1931    Anarchist         0
+## 142                    Shanghai    1931    Anarchist         0
+## 143                    Shanghai    1931    Anarchist         1
+## 144                    Shanghai    1931    Anarchist         0
+## 145                    Shanghai    1931    Anarchist         0
+## 146                    Shanghai    1931    Anarchist         1
+## 147                      Havana    1931      Leftist         0
+## 148                   Jerusalem    1931  Nationalist         0
+## 149                   Jerusalem    1931  Nationalist         0
+## 150                    Shanghai    1932     Rightist         1
+## 151                       Safed    1932    Religious         0
+## 152                       Tokyo    1932     Rightist         0
+## 153                       Kabul    1933        Other         1
+## 154                    Shanghai    1933    Anarchist         0
+## 155                       Cairo    1933  Nationalist         0
+## 156                      Madrid    1933     Rightist         0
+## 157                      Madrid    1934     Rightist         0
+## 158            Tulkarm/Qalqilya    1935  Nationalist         0
+## 159                       Paris    1936     Rightist         0
+## 160                    Shanghai    1937  Nationalist         0
+## 161                    Shanghai    1937      Leftist         0
+## 162                    Shanghai    1938        Other         0
+## 163                    Shanghai    1938  Nationalist         0
+## 164      Saint-Brieuc, Brittany    1938     Rightist         0
+## 165                       Paris    1940     Rightist         0
+## 166                   Jerusalem    1940  Nationalist         0
+## 167                Johannesberg    1941     Rightist         0
+## 168                           .    1941        Other         0
+## 169                       Aceh*    1942    Religious         0
+## 170                      Vinius    1945        Other         1
+## 171                     Atlanta    1946     Rightist         0
+## 172                     Algiers    1947  Nationalist         0
+## 173                   Jerusalem    1950    Religious         0
+## 174                  Birmingham    1951     Rightist         0
+## 175                           .    1952  Nationalist         0
+## 176                      Hubei*    1952    Religious         1
+## 177                       Tunis    1952     Rightist         1
+## 178            Santiago de Cuba    1953  Nationalist         0
+## 179                    Tel Aviv    1953        Other         0
+## 180                     Algiers    1954  Nationalist         1
+## 181                     Algiers    1954  Nationalist         0
+## 182                     Nicosia    1955  Nationalist         0
+## 183                West Bengal*    1955    Religious         1
+## 184                  Birmingham    1955     Rightist         0
+## 185                 South Tyrol    1956  Nationalist         0
+## 186                       Milan    1957     RIghtist         0
+## 187                       Cairo    1958  Nationalist         0
+## 188                           .    1959  Nationalist         0
+## 189                      Bilbao    1959  Nationalist         0
+## 190                       Miami    1959  Nationalist         0
+## 191                Buenos Aires    1960      Leftist         0
+## 192                      Lisbon    1960      Leftist         0
+## 193                     Quebec*    1960  Nationalist         1
+## 194                     Alabama    1960     Rightist         0
+## 195                           .    1960      Leftist         0
+## 196                    Brasilia    1961      Leftist         0
+## 197                      Kigali    1961  Nationalist         0
+## 198                       Cairo    1961  Nationalist         0
+## 199                      Munich    1961     Rightist         0
+## 200                           .    1961        Other         1
+## 201                Johannesberg    1961  Nationalist         0
+## 202                      Quebec    1962  Nationalist         0
+## 203                       Miami    1962        Other         0
+## 204                       Tokyo    1963      Leftist         0
+## 205                   Liverpool    1963  Nationalist         0
+## 206                     Brixham    1963        Other         1
+## 207                   Brittany*    1963  Nationalist         0
+## 208                  Narathiwat    1963  Nationalist         0
+## 209                    Cabinda*    1963  Nationalist         0
+## 210                   Melbourne    1963  Nationalist         0
+## 211                  Montevideo    1963      Leftist         0
+## 212                  Tizi-Ouzou    1963      Leftist         0
+## 213                    Montreal    1963  Nationalist         0
+## 214                     Algiers    1964  Nationalist         0
+## 215                           .    1964      Leftist         0
+## 216                Marquetalia*    1964      Leftist         0
+## 217                      Beirut    1964  Nationalist         0
+## 218          Vidalia, Louisiana    1964     Rightist         0
+## 219                Mississippi*    1964     Rightist         0
+## 220                           .    1964      Leftist         0
+## 221                 West Papua*    1965  Nationalist         0
+## 222                    Damascus    1965        Other         1
+## 223                           .    1966  Nationalist         0
+## 224                 Cordillera*    1966      Leftist         0
+## 225                           .    1966     Rightist         0
+## 226                     Belfast    1966  Nationalist         0
+## 227                    Damascus    1968  Nationalist         0
+## 228                           .    1966  Nationalist         0
+## 229                    Damascus    1966  Nationalist         0
+## 230                     Oakland    1966      Leftist         0
+## 231               New York City    1967  Nationalist         0
+## 232                  Concepcion    1967      Leftist         0
+## 233                   Mogadishu    1967  Nationalist         0
+## 234                           .    1967    Religious         0
+## 235                      Assam*    1967  Nationalist         0
+## 236                           .    1967  Nationalist         1
+## 237                           .    1967  Nationalist         0
+## 238                Buenos Aires    1968      Leftist         0
+## 239              Rio de Janeiro    1968      Leftist         0
+## 240              Rio de Janeiro    1968      Leftist         0
+## 241              Rio de Janeiro    1968      Leftist         0
+## 242                           .    1968      Leftist         0
+## 243         Miami/New York City    1968      Leftist         0
+## 244                Puerto Rico*    1968      Leftist         0
+## 245                       Paris    1968      Leftist         1
+## 246                       Paris    1968      Leftist         0
+## 247                   Frankfurt    1968      Leftist         0
+## 248                    Ramallah    1968  Nationalist         0
+## 249                           .    1968  Nationalist         0
+## 250                    Pattani*    1968  Nationalist         0
+## 251                           .    1968  Nationalist         0
+## 252                      London    1968      Leftist         0
+## 253                     Detroit    1968  Nationalist         0
+## 254               New York City    1968    Anarchist         1
+## 255               New York City    1968  Nationalist         0
+## 256                           .    1969      Leftist         0
+## 257                West Bengal*    1969      Leftist         0
+## 258                Buenos Aires    1969      Leftist         0
+## 259                       Genoa    1969      Leftist         0
+## 260                       Tokyo    1969      Leftist         0
+## 261                       Tokyo    1969      Leftist         1
+## 262                      Manila    1969      Leftist         0
+## 263                     Belfast    1969  Nationalist         0
+## 264                   Mindanao*    1969  Nationalist         0
+## 265                   San Diego    1969     Rightist         0
+## 266                   Ann Arbor    1969      Leftist         0
+## 267                     Caracas    1969      Leftist         0
+## 268                      Beirut    1969     Rightist         0
+## 269                                  NA                     NA
+## 270                                  NA                     NA</code></pre>
+<pre><code>## Observations: 270
+## Variables: 6
+## $ Country   &lt;fct&gt; USA, Russia, USA, USA, USA, Russia, China, USA, USA, USA, I…
+## $ Group     &lt;fct&gt; Molly Maguires, The Organization (Hell), Ku Klux Klan I, So…
+## $ City      &lt;fct&gt; &quot;Pennsylvania* &quot;, &quot;Moscow&quot;, &quot;Pulaski&quot;, &quot;New Orleans&quot;, &quot;Fran…
+## $ StrYear   &lt;int&gt; 1862, 1864, 1865, 1865, 1867, 1869, 1870, 1873, 1874, 1874,…
+## $ Ideology  &lt;fct&gt; Other, Anarchist, Rightist, Rightist, Rightist, Leftist, Ot…
+## $ Ambiguous &lt;int&gt; 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0,…</code></pre>
+<p>Mutate() and vetting my data:</p>
+<p>Here, I went ahead and deselected certain variables based on relevance, conveniennce, and clarity. I also used the Mutate() function to create a ‘Date’ variable based on the provided time data using library(lubridate) - very cool.</p>
+<p>Merging Datasets:</p>
+<p>Because I identified the ‘Ambiguity’ variable from the smaller, more straightword data as my point of interest, I performed a right join using this dataset as the RHS to preserve an Ambiguity datapoint in all rows. However, the caveat was that I lost a lot of data when I accounted for duplicates.</p>
+<pre class="r"><code>#Merging Datasets!
+
+right_join(comp_trrGTD, terrorG_1, by = &quot;Country&quot;) %&gt;% distinct(Country, .keep_all= TRUE) -&gt; joinedTerrors</code></pre>
+<pre><code>## Warning: Column `Country` joining factors with different levels, coercing to
+## character vector</code></pre>
+<pre class="r"><code>#Nondistinct data kept
+right_join(comp_trrGTD, terrorG_1, by = &quot;Country&quot;) -&gt; joinedTerrorsFULL</code></pre>
+<pre><code>## Warning: Column `Country` joining factors with different levels, coercing to
+## character vector</code></pre>
+<p>Reshaping:</p>
+<p>I decided to reshape my data after I had merged them. I ran a really simple untidy task which worked well. However, when I attempted to retidy, I was met with the error below. To my understanding, it is saying that R doesn’t know how to place each observation due to duplicate values.</p>
+<pre class="r"><code>#reshaping ---&gt; untidy dataset
+
+joinedTerrors %&gt;% pivot_longer(cols=c(&quot;Country&quot;, &quot;Group&quot;), names_to = &quot;Vars&quot;, values_to = &quot;AllInfo&quot;) -&gt; newUntidyJoined
+
+
+#retidying
+newUntidyJoined %&gt;% pivot_wider(names_from = &quot;Vars&quot;, values_from = &quot;AllInfo&quot;)  </code></pre>
+<pre><code>## Warning: Values in `AllInfo` are not uniquely identified; output will contain list-cols.
+## * Use `values_fn = list(AllInfo = list)` to suppress this warning.
+## * Use `values_fn = list(AllInfo = length)` to identify where the duplicates arise
+## * Use `values_fn = list(AllInfo = summary_fun)` to summarise duplicates</code></pre>
+<pre><code>## # A tibble: 69 x 12
+##    Date                 year month   day city  AttackType City  StrYear Ideology
+##    &lt;dttm&gt;              &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;fct&gt; &lt;fct&gt;      &lt;fct&gt;   &lt;int&gt; &lt;fct&gt;   
+##  1 NA                     NA    NA    NA &lt;NA&gt;  &lt;NA&gt;       &quot;Pen…    1862 Other   
+##  2 NA                     NA    NA    NA &lt;NA&gt;  &lt;NA&gt;       Mosc…    1864 Anarchi…
+##  3 NA                     NA    NA    NA &lt;NA&gt;  &lt;NA&gt;       Huna…    1870 Other   
+##  4 1995-02-10 00:00:00  1995     2    10 Srin… Assassina… Decc…    1875 Nationa…
+##  5 1986-06-15 00:00:00  1986     6    15 Bast… Bombing/E… Paris    1880 Anarchi…
+##  6 NA                     NA    NA    NA &lt;NA&gt;  &lt;NA&gt;       New …    1881 Nationa…
+##  7 NA                     NA    NA    NA &lt;NA&gt;  &lt;NA&gt;       &quot;Tok…    1881 Nationa…
+##  8 NA                     NA    NA    NA &lt;NA&gt;  &lt;NA&gt;       Dubl…    1881 Nationa…
+##  9 NA                     NA    NA    NA &lt;NA&gt;  &lt;NA&gt;       Wars…    1882 Leftist 
+## 10 1973-06-30 00:00:00  1973     7     0 madr… Bombing/E… Anda…    1882 Anarchi…
+## # … with 59 more rows, and 3 more variables: Ambiguous &lt;int&gt;,
+## #   Country &lt;list&lt;chr&gt;&gt;, Group &lt;list&lt;chr&gt;&gt;</code></pre>
+<p>Reshaping continued:</p>
+<p>Upon furter investigation of the original merged dataset, I found the likely culprits. After untidying, two observations became identical. Additionally, the data that was untidied both contained a common string of characters (“Palestein”). This is my hypothesis on why R was unable to reshape the data how I wanted.</p>
+<pre><code>## # A tibble: 2 x 12
+## # Groups:   City [1]
+##   Date                 year month   day city  AttackType City  StrYear Ideology
+##   &lt;dttm&gt;              &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;fct&gt; &lt;fct&gt;      &lt;fct&gt;   &lt;int&gt; &lt;fct&gt;   
+## 1 NA                     NA    NA    NA &lt;NA&gt;  &lt;NA&gt;       Beir…    1964 Nationa…
+## 2 NA                     NA    NA    NA &lt;NA&gt;  &lt;NA&gt;       Beir…    1964 Nationa…
+## # … with 3 more variables: Ambiguous &lt;int&gt;, Vars &lt;chr&gt;, AllInfo &lt;chr&gt;</code></pre>
+<pre><code>## Warning: Values in `AllInfo` are not uniquely identified; output will contain list-cols.
+## * Use `values_fn = list(AllInfo = list)` to suppress this warning.
+## * Use `values_fn = list(AllInfo = length)` to identify where the duplicates arise
+## * Use `values_fn = list(AllInfo = summary_fun)` to summarise duplicates</code></pre>
+<pre><code>## # A tibble: 68 x 12
+##    Date                 year month   day city  AttackType City  StrYear Ideology
+##    &lt;dttm&gt;              &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;fct&gt; &lt;fct&gt;      &lt;fct&gt;   &lt;int&gt; &lt;fct&gt;   
+##  1 NA                     NA    NA    NA &lt;NA&gt;  &lt;NA&gt;       &quot;Pen…    1862 Other   
+##  2 NA                     NA    NA    NA &lt;NA&gt;  &lt;NA&gt;       Mosc…    1864 Anarchi…
+##  3 NA                     NA    NA    NA &lt;NA&gt;  &lt;NA&gt;       Huna…    1870 Other   
+##  4 1995-02-10 00:00:00  1995     2    10 Srin… Assassina… Decc…    1875 Nationa…
+##  5 1986-06-15 00:00:00  1986     6    15 Bast… Bombing/E… Paris    1880 Anarchi…
+##  6 NA                     NA    NA    NA &lt;NA&gt;  &lt;NA&gt;       New …    1881 Nationa…
+##  7 NA                     NA    NA    NA &lt;NA&gt;  &lt;NA&gt;       &quot;Tok…    1881 Nationa…
+##  8 NA                     NA    NA    NA &lt;NA&gt;  &lt;NA&gt;       Dubl…    1881 Nationa…
+##  9 NA                     NA    NA    NA &lt;NA&gt;  &lt;NA&gt;       Wars…    1882 Leftist 
+## 10 1973-06-30 00:00:00  1973     7     0 madr… Bombing/E… Anda…    1882 Anarchi…
+## # … with 58 more rows, and 3 more variables: Ambiguous &lt;int&gt;,
+## #   Country &lt;list&lt;chr&gt;&gt;, Group &lt;list&lt;chr&gt;&gt;</code></pre>
+<p>Reshaping3.0:</p>
+<p>I tested my theory and it did not work! Which means there were other duplicates causing the problem. I looked further and couldn’t figure out which ones they were to much dismay.</p>
+<p>Data Visualization:</p>
+<p>Because I excluded all duplicates and was left with a very limited dataset, I reverted back to the original merged dataset for summary statistics. In the interest of time and of attempting to convey data on Ambiguous terror groups, I generated two bar plots with ggplot.</p>
+<p>Both essentially represent the same thing and are visual representations on the proportion of ambiguous-classified terror groups. The larger of the two show the relative proportion of ambiguous groups. Countries with the highest proportion of ambiguous terror groups were Greece, Afghanistan, Russia, and Romania with teh USA and Russia having the highest incidences of terrorist activities. The larger the bar, the larger the precentage of non-conforming terror groups in that country. I thought this was a little bit of a creative way to represent this unfamiliar variable. Countries with small or no bars have little to no undefined terror groups and thus might be easier to understand or safer to establish foreign relations with.</p>
+<p>The second plot - the faceted geombar plot - represented this data in a slightly different way. This plot was grouped by both City and Country so each facet represents the proportion of these mysterious terror groups per per country with a bar for every listed city listed. countries with more bars have more terror groups overall. However, the color of the bars must also be noted. Proportionality of ambiguous terror groups is represented by a color gradient where light blue bars indicate a completely ambiguous terror group presence. Dark bars represent little to no presence of these type of groups.</p>
+<p><img src="/Project1_files/figure-html/unnamed-chunk-4-1.png" width="672" /><img src="/Project1_files/figure-html/unnamed-chunk-4-2.png" width="672" /></p>
+<pre><code>## Warning: Factor `AttackType` contains implicit NA, consider using
+## `forcats::fct_explicit_na`</code></pre>
+<pre><code>## # A tibble: 7 x 5
+##   AttackType                     PropAmbig sdAmbig     n seAmbig
+##   &lt;fct&gt;                              &lt;dbl&gt;   &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt;
+## 1 Armed Assault                      0.1     0.304    40  0.0480
+## 2 Assassination                      0.135   0.347    37  0.0570
+## 3 Bombing/Explosion                  0.209   0.409    86  0.0441
+## 4 Facility/Infrastructure Attack     0.154   0.376    13  0.104 
+## 5 Hostage Taking (Kidnapping)        0       0         6  0     
+## 6 Unknown                            0       0         8  0     
+## 7 &lt;NA&gt;                               0.136   0.344   208  0.0238</code></pre>
+</div>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Project 3!!</title>
+    <link>/</link>
+    <description>Recent content on Project 3!!</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <lastBuildDate>Sat, 14 Dec 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Hello World!</title>
+      <link>/blog/hello-world/</link>
+      <pubDate>Sat, 14 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/hello-world/</guid>
+      <description>Hi Everyone!
+In SDS 348, we learned a LOT of cool things. My favorite adventure in the class was definitely learning Python! I had particular fun with it because I already had some knowledge from CS303E. It was really awesome to see how I could apply what I thought of as “traditional” python programming to RStudio since our entry-level biostatistics class is taught a bit differenetly than the comp-sci one.</description>
+    </item>
+    
+    <item>
+      <title>Projects</title>
+      <link>/projects/</link>
+      <pubDate>Sun, 02 Oct 2016 22:55:05 -0400</pubDate>
+      
+      <guid>/projects/</guid>
+      <description>SDS 348: Bioinformatics and Computational Biology Here are some projects I have been working on:
+ Project 1 Project 2  </description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/project2/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/project2/</guid>
+      <description>## Df Pillai approx F num Df den Df Pr(&amp;gt;F)## colour 1 0.031571 85.136 2 5223 &amp;lt; 2.2e-16 ***## Residuals 5224## ---## Signif. codes: 0 &amp;#39;***&amp;#39; 0.001 &amp;#39;**&amp;#39; 0.01 &amp;#39;*&amp;#39; 0.05 &amp;#39;.&amp;#39; 0.1&amp;#39; &amp;#39; 1## Response age :## Df Sum Sq Mean Sq F value Pr(&amp;gt;F)## colour 1 1637 1637.47 23.78 1.112e-06 ***## Residuals 5224 359713 68.86## ---## Signif.</description>
+    </item>
+    
+    <item>
+      <title>project 1</title>
+      <link>/project1/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/project1/</guid>
+      <description>Project 1#intro! :D#terrorist group data terrorG &amp;lt;- read.csv(&amp;quot;TerroristGroups.csv&amp;quot;, header=TRUE, sep=&amp;quot;,&amp;quot;)#Global Terrorism Database informationtrrGTD1 &amp;lt;- read.csv(&amp;quot;GlobalTerrorismDatabase.csv&amp;quot;, header=TRUE, sep=&amp;quot;,&amp;quot;)trrGTD &amp;lt;- trrGTD1[sample(1:nrow(trrGTD1), 100,replace=FALSE),]#glimpse(trrGTD)#common variable = country!Preparing my Data:Preface:
+In the following chunks I performed a few operations that ultimately reduced the size and complexity of these sets. This is because I have enormous difficulty with visualizing and understanding large sets of data.</description>
+    </item>
+    
+    <item>
+      <title>Project 2</title>
+      <link>/project2/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/project2/</guid>
+      <description>## Df Pillai approx F num Df den Df Pr(&amp;gt;F)## colour 1 0.031571 85.136 2 5223 &amp;lt; 2.2e-16 ***## Residuals 5224## ---## Signif. codes: 0 &amp;#39;***&amp;#39; 0.001 &amp;#39;**&amp;#39; 0.01 &amp;#39;*&amp;#39; 0.05 &amp;#39;.&amp;#39; 0.1&amp;#39; &amp;#39; 1## Response age :## Df Sum Sq Mean Sq F value Pr(&amp;gt;F)## colour 1 1637 1637.47 23.78 1.112e-06 ***## Residuals 5224 359713 68.86## ---## Signif.</description>
+    </item>
+    
+  </channel>
+</rss>

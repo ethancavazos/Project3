@@ -1,0 +1,2 @@
+"0","library(reticulate)"
+"0","reticulate::use_python(""C:\\Users\\edog\\AppData\\Local\\Programs\\Python\\Python36\\python.exe"",required=TRUE)"

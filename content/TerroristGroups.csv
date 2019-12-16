@@ -1,0 +1,271 @@
+Group,Country,City,StrYear,EndYear,Ideology,Ambiguous
+Molly Maguires,USA,Pennsylvania* ,1862,1875,Other,0
+The Organization (Hell),Russia,Moscow,1864,1866,Anarchist,0
+Ku Klux Klan I,USA,Pulaski,1865,1869,Rightist,0
+Southern Cross,USA,New Orleans,1865,1869,Rightist,0
+Knights of the White Camellia,USA,"Franklin, Louisiana",1867,1870,Rightist,0
+People's Retribution (Society of the Axe),Russia,Moscow,1869,1872,Leftist,0
+Elder Brother's Society,China,Hunan*,1870,1949,Other,1
+Clan na Gael,USA,New York City,1873,1887,Nationalist,0
+The White Line,USA,Vicksburg Mississippi,1874,1874,Rightist,0
+White League,USA,Colfax,1874,1876,Rightist,1
+Ramoshi,India,Deccan Region*,1875,1879,Nationalist,1
+Red Shirts,USA,Charleston and Mississippi*,1875,1900,Rightist,1
+Land and Freedom,Russia,Saint Petersburg,1876,1879,Leftist,0
+Executive Committee of the Social Revolutionary Party,Russia,Kiev (Ukraine),1878,1879,Leftist,0
+Black Repartition,Russia,Saint Petersburg,1879,1881,Anarchist,0
+People's Will,Russia,Saint Petersburg,1879,1884,Anarchist,0
+The Panther of Batignolles,France,Paris,1880,1886,Anarchist,1
+Skirmishers,Ireland/US,New York City,1881,1885,Nationalist,0
+Genyosha (Black Ocean Society),Japan ,Tokyo / Fukuoka ,1881,1946,Nationalist,1
+Irish National Invincibles,UK,Dublin,1881,1883,Nationalist,0
+Bande Noir,France,Paris (Lyons),1882,1884,Anarchist,0
+Proletariat Party,Russia/ Poland,Warsaw,1882,1886,Leftist,0
+Mano Negra,Spain,Andalusia,1882,1884,Anarchist,1
+Les Egaux de Montmartre,France,Paris,1883,1886,Anarchist,0
+Liberation of Labor,Russia,Geneva,1883,1903,Leftist,1
+Terrorist Faction of the People's Will,Russia,Saint Petersburg,1886,1889,Leftist,0
+Social Democrat Hunchakian Party,Ottomon Empire,Geneva,1887,1921,Leftist,0
+Ulyanov Conspiracy,Russia,Saint Petersburg,1887,1887,Leftist,0
+Second Proletariat Party,Russia,Warsaw/Paris,1888,1893,Leftist,0
+Committee of Union and Progress,Ottomon Empire,Constantinople,1889,1918,Nationalist,0
+Armenian Revolutionary Federation,Russia/ Ottomon Empire,Tiflis,1890,1918,Nationalist,0
+Radical Civic Union,Argentina,Buenos Aires,1891,1916,Leftist,0
+Polish Socialist Party,Russia/France,Paris,1892,1948,Leftist,1
+Les Revoltes,France,Paris,1893,1914,Anarchist,1
+Internal Macedonian Rev Org,Ottomon Empire,Salonica (Thessaloniki),1893,1936,Nationalist,0
+Society for the Removal of Obstacles to the Hindu Religion (Chapekar Group),India,Pune,1895,1899,Nationalist,0
+Supreme Macedonian-Adrianople Committee,Ottomon Empire,Macedonia*,1895,1905,Nationalist,0
+Ottoman Revolutionary Party,Ottomon Empire,Geneva,1897,.,Nationalist,0
+Bulgarian Secret Revolutionary Brotherhood,Ottomon Empire,Salonica (Thessaloniki),1897,1899,Rightist,0
+Society against Serbs,Ottomon Empire,Salonica (Thessaloniki),1897,1902,Nationalist,0
+Russian Social Democratic Labor Party,Russia,Minsk,1898,1918,Leftist,0
+Assassins of Salonica,Ottomon Empire,Salonica (Thessaloniki),1898,1903,Anarchist,0
+Socialist Union,Russia,Baltics*,1899,1921,Leftist,0
+"Polish Socialist Party ""Proletariat""",Russia,Lvov (Ukraine),1900,1907,Leftist,0
+Black Dragon Society (Amur Society),Japan ,Tokyo,1901,1946,Rightist,1
+Polish Workers' Socialist Party,Russia,Warsaw,1901,1907,Leftist,0
+Black Hand,Serbia,Belgrade,1901,1914,Nationalist,0
+Anushilan Samiti,India,Calcutta,1902,1918,Nationalist,0
+Socialist Revolutionary Party (Combat Org),Russia,Saint Petersburg,1902,1921,Leftist,0
+Abhinav Bharat Society,India,Pune (maybe Nasik?),1903,1952,Nationalist,0
+"International Group ""Struggle""",Russia,Belostok,1903,1903,Anarchist,0
+Uncompromising Ones,Russia,Odessa,1903,1903,Anarchist,0
+Black Banner,Russia,"Belostok, Odessa, Nezhin",1903,1903,Anarchist,0
+Women's Social and Political Union,UK,Manchester,1903,1917,Leftist,0
+Serbian Committee,Serbia,Belgrade,1903,1912,Nationalist,0
+Finnish Party of Active Resistance,Russia/Finland,Helsinki,1904,1906,Nationalist,0
+Combat Org of Polish Socialist Party,Russia,Warsaw,1904,1911,Leftist,0
+Comite de Accion,Spain,Barcelona,1904,1905,Anarchist,1
+Society of Fraternal Solidarity,Egypt,Cairo,1905,1910,Nationalist,0
+Dhaka Anushilan Samiti (Amushilan Samiti),India,Dhaka,1905,1905,Nationalist,0
+Horror,Russia,Georgia/Armenia*,1905,1905,Anarchist,0
+Death to the Capital,Russia,Georgia/Armenia*,1905,1905,Anarchist,0
+Red Hundreds,Russia,Telavi ,1905,1905,Other,0
+Without Authority (Black Banner),Russia,Saint Petersburg,1905,1905,Anarchist,0
+Union of the Russian People (Black Hundreds),Russia,Saint Petersburg,1905,1917,Rightist,0
+Georgian Social Democrats,Russia,Tiflis,1905,1907,Leftist,0
+Independent Socialists-Revolutionaries,Russia,Gomel,1905,1905,Anarchist,0
+Death for Death,Russia,Saint Petersburg,1905,1905,Anarchist,0
+Juventud Libertaria,Spain,Barcelona,1905,1905,Leftist,0
+India House,UK,London,1905,1910,Nationalist,1
+Jugantar,India,Calcutta,1906,1938,Nationalist,0
+Obreros Libres,Mexico,Orizaba,1906,1907,Leftist,0
+Caucasian All Muslim Union (Dfai),Russia,North Caucasus,1906,1906,Nationalist,0
+Federal Committee of Riga,Russia,Riga,1906,1907,Other,0
+Prawica (PPS - Revolutionary Faction),Russia,Lvov,1906,1907,Leftist,0
+Black Terror,Russia,Kiev,1906,1906,Anarchist,0
+Terror Group of the City of Tiflis and its Counties,Russia,Tiflis,1906,1906,Anarchist,0
+International Association of Bridge and Iron Workers,USA,Pittsburgh,1906,1914,Anarchist,0
+Maniktala Group,India,Calcutta,1907,1908,Nationalist,0
+Anarchist Black Cross,Russia,.,1907,1917,Anarchist,0
+Group of Terrorists-Expropriators ,Russia,Saint Petersburg,1907,1907,Anarchist,0
+League of the Red Fuse,Russia,Voronezh ,1907,1908,Leftist,1
+Green Hundreds,Russia,Baku,1907,1907,Anarchist,1
+Warsaw Group of Anarchists-Communists-International,Russia (Poland),Warsaw,1907,1907,Anarchist,0
+Young Bosnia,Bosnia (Austria-Hungary),.,1907,1914,Nationalist,0
+Junta Organization de PLM,Mexico,Saint Louis (Mexico City??),1908,1918,Leftist,0
+Costa Cell,Portugal,Lisbon,1908,1908,Leftist,0
+Union of Active Struggle,Russia,Lvov,1908,1914,Anarchist,0
+Narodna Odbrana,Serbia,.,1908,1914,Nationalist,0
+Argenitian Anarchists,Argentina,Buenos Aires,1909,1910,Anarchist,0
+Chinese Assassination Corps,China,Hong Kong,1910,1911,Anarchist,0
+Japanese Anarchists,Japan ,Nagano Prefecture,1910,1910,Anarchist,0
+Revolutionary Avengers,Russia (Poland),Lodz,1910,1914,Anarchist,0
+Confederacion Nacional del Trabajo (CNT),Spain,Barcelona,1910,1948,Anarchist,0
+The Bonnot Gang,France,Paris,1911,1912,Anarchist,1
+Young Arab Society,Ottomon Empire/France,Paris,1911,1919,Nationalist,0
+Black Hand,Serbia,Belgrade,1911,1917,Nationalist,0
+Young Bosnia,Serbia,Belgrade,1911,1914,Nationalist,0
+Uslter Volunteers,UK,Belfast,1912,1922,Nationalist,1
+Covenant Society,Ottomon Empire,Damascus,1913,1921,Nationalist,0
+Irish Volunteers,UK,Dublin,1913,1917,Nationalist ,0
+Ulster Volunteer Force,UK,Belfast,1913,1919,Nationalist,1
+Ghadar Party,USA,Stockton,1913,1948,Nationalist,1
+Society of the Arab Revolution,Egypt,Cairo,1914,1914,Nationalist,0
+The Banner's Society,Ottomon Empire,Mosul,1914,1914,Nationalist,0
+Galleanisti Anarchists,USA,New York City,1914,1919,Anarchist,0
+Ku Klux Klan II,USA,Atlanta,1915,1944,Rightist,0
+Irish Republican Army I,UK,Dublin,1917,1922,Nationalist,0
+Wafd Party,Egypt,Cairo,1918,1952,Nationalist,0
+Red Guards,Italy,Turin/Milan,1918,1920,Anarchist,0
+Uiyeoldan (Righteous Group),China,Shanghai,1919,1924,Anarchist,0
+Haganah,Mand Palest,Jerusalem,1920,1948,Nationalist,0
+Los Justicieros,Spain,San Sebastian,1920,1922,Anarchist,0
+Organisation Consul,Germany,Munich,1921,1922,Rightist,0
+Black Youth League,China,Shanghai,1921,1924,Anarchist,0
+Arditi del Popolo,Italy,Rome,1921,1924,Leftist,0
+Ku Klux Klan of Canada,Canada,Montreal,1922,1929,Rightist,0
+Irish Republican Army II,Ireland,Dublin,1922,1969,Nationalist,0
+Guillotine Society,Japan ,Osaka,1922,1926,Anarchist,0
+Puerto Rican Nationalist Party,USA (Puerto Rico),San Juan,1922,1965,Nationalist,0
+Los Solidarios,Spain,Barcelona,1922,1933,Anarchist,0
+Shestorki of the Bulgarian Communist Party,Bulgaria,.,1923,1925,Leftist,0
+Damuldan,China,Beijing,1923,1923,Anarchist,0
+Viking League,Germany,Munich,1923,1928,Rightist,0
+Society of Malcontents,Japan ,Tokyo,1923,1923,Anarchist,1
+Society of Taiwanese and Korean Comrades,China,Shanghai,1924,1925,Anarchist,0
+Black Legion,USA,"Bellaire, Ohio",1924,1936,Rightist,0
+Young Officers Movement,Japan ,Tokyo,1924,1937,Other,1
+Culmine (Di Giovanni cell),Argentina,Buenos Aires,1925,1931,Anarchist,0
+Red Terror Squad,China,.,1925,1927,Leftist,0
+Naujawan Bharat Sabha (Youth Society of India),India,Punjab,1926,1929,Nationalist,0
+Iron Guard,Romania,Bucharest,1927,1941,Rightist,1
+Iberian Anarchist Federation (FAI),Spain,Valencia,1927,1939,Anarchist,0
+Bengal Volunteers,India,Calcutta,1928,1947,Nationalist,0
+Hindustan Socialist Republican Assoc,India ,New Delhi,1928,1931,Nationalist,0
+Organization of Ukranian Nationalists,Austria,Vienna,1929,1940,Rightist,0
+The Green Hand,Mand Palest,Safed,1929,1930,Nationalist,0
+Ustaše,Yugoslavia,Zagreb,1929,1945,Rightist,0
+Sakura (Cherry Society),Japan ,Tokyo,1930,1931,Rightist,1
+Black Hand,Mand Palest,Haifa,1930,1935,Religious,0
+League of Korean Youth in South China,China,Shanghai,1931,1937,Anarchist,0
+Korean Patriotic Organization,China,Shanghai,1931,1940,Anarchist,0
+League of Resisting Japan and Saving the Nation,China,Shanghai,1931,1931,Anarchist,1
+Vigorous Blood Group,China,Shanghai,1931,1931,Anarchist,0
+Eradicating Traitors Group,China,Shanghai,1931,1933,Anarchist,0
+Black Terror Group (Possibly part of LKYSC),China,Shanghai,1931,1931,Anarchist,1
+ABC,Cuba,Havana,1931,1952,Leftist,0
+Irgun,Mand Palest,Jerusalem,1931,1948,Nationalist,0
+Army of the Holy War,Mand Palest,Jerusalem,1931,1949,Nationalist,0
+Blue Shirts Society,China,Shanghai,1932,1938,Rightist,1
+Holy War Organization,Mand Palest,Safed,1932,1949,Religious,0
+League of Blood Society,Japan ,Tokyo,1932,1932,Rightist,0
+Abdul Khaliq Group,Afghanistan,Kabul,1933,1933,Other,1
+Black Terrorist Party,China,Shanghai,1933,1934,Anarchist,0
+Young Egypt,Egypt,Cairo,1933,1953,Nationalist,0
+Spanish Phalanx,Spain,Madrid,1933,1934,Rightist,0
+Falange (pistoleros),Spain,Madrid,1934,1936,Rightist,0
+Avenging Youth,Mand Palest,Tulkarm/Qalqilya,1935,1935,Nationalist,0
+Comité Secret d’Action Révolutionnaire (La Cagoule),France,Paris,1936,1941,Rightist,0
+Special Services Corps,China,Shanghai,1937,1938,Nationalist,0
+Chinese Youths National Salvation Association,China,Shanghai,1937,1942,Leftist,0
+Yellow Way Society,China,Shanghai,1938,1938,Other,0
+Blood and Soul Traitors-Extermination Corps,China,Shanghai,1938,1938,Nationalist,0
+Compagnie du Mystère,France,"Saint-Brieuc, Brittany",1938,1938,Rightist,0
+Mouvement Social Révolutionnaire,France,Paris,1940,1941,Rightist,0
+Lehi,Mand Palest,Jerusalem,1940,1948,Nationalist,0
+Stormjaers,South Africa,Johannesberg,1941,1942,Rightist,0
+Chetniks,Yugoslavia,.,1941,1946,Other,0
+Darul Islam,Indonesia,Aceh*,1942,1962,Religious,0
+Nakam,Israel,Vinius,1945,1945,Other,1
+The Columbians,USA,Atlanta,1946,1947,Rightist,0
+Special Organization,Algeria,Algiers,1947,1951,Nationalist,0
+Brit HaKanaim,Israel,Jerusalem,1950,1953,Religious,0
+Ku Klux Klan III,USA,Birmingham,1951,.,Rightist,0
+Palestinian Fedayeen,Israel,.,1952,1968,Nationalist,0
+Doumu Tan,China,Hubei*,1952,1952,Religious,1
+Red Hand,France,Tunis,1952,1959,Rightist,1
+26th of July Movement,Cuba,Santiago de Cuba,1953,1959,Nationalist,0
+Kingdom of Israel,Israel,Tel Aviv,1953,1953,Other,0
+Revolutionary Committee of Unity and Action,Algeria,Algiers,1954,1954,Nationalist,1
+FLN,Algeria,Algiers,1954,1962,Nationalist,0
+EOKA,Cyprus,Nicosia,1955,1959,Nationalist,0
+Ananda Marga,India,West Bengal*,1955,.,Religious,1
+Original Ku Klux Klan of the Confederacy,USA,Birmingham,1955,1958,Rightist,0
+South Tyrolean Liberation Committee (BAS),Italy,South Tyrol,1956,1964,Nationalist,0
+Ordine Nuovo,Italy,Milan,1957,1973,RIghtist,0
+al-Fatah,Palestine/ Egypt,Cairo,1958,.,Nationalist,0
+Palestine Liberation Front,"Syria, Egypt, Lebanon",.,1959,1996,Nationalist,0
+ETA,Spain,Bilbao,1959,.,Nationalist,0
+Cuban Nationalist Movement (CNM),USA,Miami,1959,1981,Nationalist,0
+People's Revolutionary Army,Argentina,Buenos Aires,1960,1977,Leftist,0
+Armed Revolutionary Action,"Mozambique, Portugal",Lisbon,1960,1974,Leftist,0
+Brigade d'autodéfense du français,Canada,Quebec*,1960,2001,Nationalist,1
+United Klans of America,USA,Alabama,1960,1987,Rightist,0
+Rebel Armed Forces,Guatemala,.,1960,1971,Leftist,0
+Communist Party of Brazil,Brazil,Brasilia,1961,1979,Leftist,0
+Inyenzi,Burundi,Kigali,1961,1965,Nationalist,0
+Eritrean Liberation Front,"Eritrea, Ethiopia, Egypt",Cairo,1961,1991,Nationalist,0
+Gruppe um Dr. Burger,Germany,Munich,1961,1964,Rightist,0
+Henrique Galvão Group,Portugal,.,1961,1961,Other,1
+MK (ANC),South Africa,Johannesberg,1961,1994,Nationalist,0
+Front de Liberation du Quebec (FLQ),Canada,Quebec,1962,1970,Nationalist,0
+Alpha 66,USA,Miami,1962,.,Other,0
+Chukakuha,Japan ,Tokyo,1963,2007,Leftist,0
+Mudiad Amddiffyn Cymru,UK,Liverpool,1963,1969,Nationalist,0
+Band of Mercy,UK,Brixham,1963,1974,Other,1
+Breton Liberation Front,France,Brittany*,1963,2014,Nationalist,0
+Barisan Revolusi Nasional ,Thailand,Narathiwat,1963,.,Nationalist,0
+Front for the Liberation of the Cabinda Enclave,Angola,Cabinda*,1963,.,Nationalist,0
+Croatian Revolutionary Brotherhood (CRB),Australia,Melbourne,1963,1975,Nationalist,0
+Tupamaros,Uruguay,Montevideo,1963,1985,Leftist,0
+Front of Socialist Forces,Algeria,Tizi-Ouzou,1963,1966,Leftist,0
+Quebec Liberation Front,Canada,Montreal,1963,1970,Nationalist,0
+Canary Islands Independence Movement,Algeria,Algiers,1964,1979,Nationalist,0
+ELN,Colombia,.,1964,.,Leftist,0
+FARC,Colombia,Marquetalia*,1964,2017,Leftist,0
+Popular Front for the Liberation of Palestine (PFLP),Palestein,Beirut,1964,.,Nationalist,0
+Silver Dollar Group,USA,"Vidalia, Louisiana",1964,1967,Rightist,0
+White Knights of Mississippi,USA,Mississippi*,1964,.,Rightist,0
+Popular Revolutionary Vanguard,Brazil,.,1964,1973,Leftist,0
+Free Papua Movement,Indonesia,West Papua*,1965,.,Nationalist,0
+Phalanxes of Mohammed,Syria,Damascus,1965,1965,Other,1
+Operativo Condor,Argentina,.,1966,1966,Nationalist,0
+National Liberation Army,Bolivia,Cordillera*,1966,1967,Leftist,0
+Federation for European Nationalist Action,France,.,1966,1987,Rightist,0
+Ulster Volunteer Force,Ireland,Belfast,1966,2007,Nationalist,0
+Al-Saiqa,Syria,Damascus,1968,.,Nationalist,0
+Arabian People's Union,North Yemen,.,1966,1967,Nationalist,0
+As-Saiqa,Syria,Damascus,1966,.,Nationalist,0
+Black Panthers,USA,Oakland,1966,1972,Leftist,0
+Independent Armed Revolutionary Movement,USA,New York City,1967,1970,Nationalist,0
+Movement of the Revolutionary Left (MIR),Chile,Concepcion,1967,1981,Leftist,0
+Front for the Liberation of the French Somali Coast,"Somalia, Djibouti",Mogadishu,1967,1977,Nationalist,0
+Islamic Liberation Organization,"Egypt, Lebanon",.,1967,1985,Religious,0
+All Bodo Students Union,India,Assam*,1967,.,Nationalist,0
+Free Greeks,Greece,.,1967,1974,Nationalist,1
+Palestinian Popular Struggle Front,Lebanon,.,1967,1991,Nationalist,0
+Frente de Liberacion Nacional del Vietnam del Sur,Argentina,Buenos Aires,1968,1976,Leftist,0
+VAR-Palmares,Brazil,Rio de Janeiro,1968,1972,Leftist,0
+Alianca Libertadora Nacional,Brazil,Rio de Janeiro,1968,1970,Leftist,0
+Revolutionary Movement of Oct 8,Brazil,Rio de Janeiro,1968,1972,Leftist,0
+People's Organized Vanguard,Chile,.,1968,1971,Leftist,0
+Cuban Power,United States,Miami/New York City,1968,1968,Leftist,0
+Armed Commando of Liberation,USA,Puerto Rico*,1968,1985,Leftist,0
+March 22 Movement,France,Paris,1968,1968,Leftist,1
+Proletarian Left,France,Paris,1968,1969,Leftist,0
+Red Army Faction,Germany,Frankfurt,1968,1977,Leftist,0
+Arab Liberation Front,Iraq/Palestine,Ramallah,1968,2006,Nationalist,0
+"Popular Front for the Liberation of Palestine, GC","Lebanon, Syria",.,1968,.,Nationalist,0
+Pattani United LIberation Organization,"Malaysia, Thailand",Pattani*,1968,.,Nationalist,0
+Democratic Front for the Liberation of Palestine,Palestine,.,1968,.,Nationalist,0
+Angry Brigade,UK,London,1968,1972,Leftist,0
+Republic of New Africa,USA,Detroit,1968,1971,Nationalist,0
+Up Against the Wall Motherfuckers,USA,New York City,1968,1970,Anarchist,1
+Jewish Defense League,USA,New York City,1968,1987,Nationalist,0
+Democratic Resistance,Brazil,.,1969,1974,Leftist,0
+Maoist Communist Center,India,West Bengal*,1969,2004,Leftist,0
+People's Revolutionary Army,Aregentina,Buenos Aires,1969,1977,Leftist,0
+October 22 Circle,Italy,Genoa,1969,1971,Leftist,0
+Red Army Faction,Japan ,Tokyo,1969,1971,Leftist,0
+Kakurokyo,Japan ,Tokyo,1969,2013,Leftist,1
+New People's Army,Philippines,Manila,1969,.,Leftist,0
+Provisional IRA,UK,Belfast,1969,2005,Nationalist,0
+Moro National Liberation Front,Philippines,Mindanao*,1969,.,Nationalist,0
+Secret Army Organization,USA,San Diego,1969,1972,Rightist,0
+The Weathermen,USA,Ann Arbor,1969,1977,Leftist,0
+Red Flag,Venezuela,Caracas,1969,1998,Leftist,0
+Al-Tanzim,Lebanon,Beirut,1969,1990,Rightist,0
+,,,,,,
+* denotes provincial level unit rather than city,,,,,,
