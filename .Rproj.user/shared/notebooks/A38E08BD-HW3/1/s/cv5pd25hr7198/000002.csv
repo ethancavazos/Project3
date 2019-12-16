@@ -1,0 +1,2 @@
+"0","bp <- rnorm(n = 10000, m = 82, sd = 11)"
+"0","hist(bp, breaks = 11, main = ""Blood Pressure"")"

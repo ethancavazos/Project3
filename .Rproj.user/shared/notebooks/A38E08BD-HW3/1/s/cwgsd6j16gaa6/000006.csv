@@ -1,0 +1,2 @@
+"0","lessthanmed <- faithful %>% filter(waiting < median(waiting))"
+"0","lessthanmed %>% select(waiting, eruptions)"

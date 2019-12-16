@@ -41,3 +41,4 @@ def kmers(seq, k):
 We did learn a lot of other really cool things, though. I'll definitely be re-formatting my blog posts and tailor each one to specific topics and helpful pieces of code for subjects like regex, regressions, dplyr, etc. 
 
 I would also like to link some pictures of my research adventures to some posts (see below) so please stay tuned! :-)
+![](/blog/2019-12-14-hello-world_files/pic1.jpg)

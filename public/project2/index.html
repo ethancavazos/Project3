@@ -1,3 +1,75 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Ethan" />
+    <meta name="description" content="Project #3 for SDS 348">
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico">
+    <title>Project 2</title>
+    <meta name="generator" content="Hugo 0.61.0" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400,200bold,400old" />
+    
+    <!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+
+    
+  </head>
+
+  <body>
+    <div id="wrap">
+
+      
+      <nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/"><i class="fa fa-home"></i></a>
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <div class="navbar-collapse collapse" id="navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+        <li><a href="/blog/">BLOG</a></li>
+        
+        <li><a href="/projects/">PROJECTS</a></li>
+        
+        <li><a href="/resume/">[RESUME ON MAIN PAGE]</a></li>
+        
+      
+      </ul>
+    </div>
+  </div>
+</nav>
+
+      
+      <div class="container">
+        <div class="blog-post">
+          <h3>
+            <strong><a href="/project2/">Project 2</a></strong>
+          </h3>
+        </div>
+        <div class="blog-title">
+          <h4>
+          January 1, 0001
+            &nbsp;&nbsp;
+            
+          </h4>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="blogpost">
+              
 
 
 <pre><code>## Df Pillai approx F num Df den Df Pr(&gt;F)
@@ -91,7 +163,7 @@ freedom
   scale_size_discrete(range = c(1, 10))+
  geom_smooth(method=&quot;lm&quot;,formula=y~1,se=F,fullrange=T,aes(color=colour))+
 theme(legend.position=c(.9,.19)) + xlab(&quot;Age in years&quot;)</code></pre>
-<p><img src="Project2!_files/figure-html/linear%20regression-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p><img src="/Project2_files/figure-html/linear%20regression-1.png" width="768" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>bptest(my_glm)</code></pre>
 <pre><code>## 
 ##  studentized Breusch-Pagan test
@@ -120,8 +192,8 @@ samp_distn&lt;-replicate(5000, {
 samp_distn%&gt;%t%&gt;%as.data.frame%&gt;%summarize_all(sd)</code></pre>
 <pre><code>## (Intercept) age colour centeredage centeredcolour
 centeredage:centeredcolour
-## 1 0.0632783 0.00251138 0.04832811 0.002515126 0.049106
-0.005655561</code></pre>
+## 1 0.06238278 0.002438328 0.04896764 0.002531638
+0.04843307 0.005651108</code></pre>
 <pre class="r"><code>#compare to Robust SEs
 coeftest(my_glm, vcov=vcovHC(my_glm))</code></pre>
 <pre><code>##
@@ -231,14 +303,14 @@ confTable</code></pre>
 
 ggplot(data, aes(age,prob))+geom_point(aes(color=colour),alpha=.5,size=3)+
  geom_rug(aes(color=colour),alpha=.5,sides=&quot;right&quot;)+geom_hline(yintercept=.1)</code></pre>
-<p><img src="Project2!_files/figure-html/log%20reg-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p><img src="/Project2_files/figure-html/log%20reg-1.png" width="768" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>library(plotROC) 
 #install.packages(&quot;plotROC&quot;)
 
 #ROC
 ROCplot&lt;-ggplot(data)+geom_roc(aes(d=colour,m=checks), n.cuts=0)
 ROCplot</code></pre>
-<p><img src="Project2!_files/figure-html/log%20reg-2.png" width="768" style="display: block; margin: auto;" /></p>
+<p><img src="/Project2_files/figure-html/log%20reg-2.png" width="768" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>calc_auc(ROCplot)</code></pre>
 <pre><code>##   PANEL group       AUC
 ## 1     1    -1 0.6140203</code></pre>
@@ -307,63 +379,6 @@ apply(diags, 2, mean)</code></pre>
 # k=10 #choose number of folds
 # data1&lt;-newdat[sample(nrow(newdat)),] #randomly order rows
 # folds&lt;-cut(seq(1:nrow(newdat)),breaks=k,labels=F) #create folds
-# diags&lt;-NULL
-# for(i in 1:k){
-#  ## Create training and test sets
-#  train&lt;-data1[folds!=i,]
-#  test&lt;-data1[folds==i,]
-#  truth&lt;-test$colour
-#  ## Train model on training set
-#  fit&lt;-glm(colour~.,data=train,family=&quot;binomial&quot;)
-#  probs&lt;-predict(fit,newdata = test,type=&quot;response&quot;)
-#  ## Test model on test set (save all k results)
-#  diags&lt;-rbind(diags,class_diag(probs,truth))
-# }
-# diags%&gt;%summarize_all(mean)</code></pre>
-<p>##6.</p>
-<p><em>Upon running a LASSO regression on my data, it become evident that year, age, and sex were less important predictors of a person’s race.</em></p>
-<pre class="r"><code>#permutation via adonis 
-
-#distances/dissimilarities
-#dists&lt;-data%&gt;%select(age,checks)%&gt;%dist()
-
-#perform PERMANOVA on distances/dissimilarities on a subset of the data
-#adonis(dists~colour, TRUE, data=sample(data))
-
-
-#Finding observed F distribution
-#dataPerm &lt;- data %&gt;% select(-X, -released, -year, -sex, -employed, -citizen)
-#dist&lt;-vegdist(sqrt(dataPerm[,-c(1)]),method=&quot;bray&quot;) #sqrt to minimize influence of big abundances
-#dist0&lt;-vegdist(sqrt(dataPerm[dataPerm$colour==&quot;0&quot;,-c(1)]),method=&quot;bray&quot;)
-#dist1&lt;-vegdist(sqrt(dataPerm[dataPerm$colour==&quot;1&quot;,-c(1)]),method=&quot;bray&quot;)
-#SSR&lt;-sum(dist0^2)/3938+sum(dist1^2)/1288
-#SST&lt;-sum(dist^2)/5226
-#Fstat&lt;-(SST-SSR)/(SSR/5224)
-
-#Fstat #= 117.6371 observed
-
-#Histogram of observed 
-
-
-#Null distribution of F
-#perm.sampdist&lt;-replicate(5000,{
-#new&lt;-data %&gt;% select(X, released, year, sex, employed, citizen, colour, age, checks)
-#new$colour&lt;-sample(data$colour)
-#dist&lt;-vegdist(sqrt(new[,-c(1:7)]),method=&quot;bray&quot;)
-#dist0&lt;-vegdist(sqrt(new[new$colour==&quot;0&quot;,-c(1:7)]),method=&quot;bray&quot;)
-#dist1&lt;-vegdist(sqrt(new[new$DIVERSITY==&quot;1&quot;,-c(1:7)]),method=&quot;bray&quot;)
-#SSR&lt;-sum(dist0^2)/3938+sum(dist1^2)/1288
-#SST&lt;-sum(dist^2)/5226
-#(SST-SSR)/(SSR/5223)
-#} )
-
-#mean(perm.sampdist&gt;Fstat)</code></pre>
-<p>##2.</p>
-<p><em>A randomization test was performed both by hand and by using the adonis() function from the vegan package.</em>
-<em>H0: F = 117.6371 (as observed)</em>
-<em>Ha: F =/= 117.6371</em>
-<em>Computation by way of adonis yielded interestubf results. the F statistic was indicated as 28.16. Manual computation of the F statistic </em></p>
-dat)),breaks=k,labels=F) #create folds
 # diags&lt;-NULL
 # for(i in 1:k){
 #  ## Create training and test sets
